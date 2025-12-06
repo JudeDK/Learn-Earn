@@ -1,0 +1,1259 @@
+UNIVERSITATEA DIN BUCUREȘTI
+FACULTATEA DE MATEMATICĂ ȘI INFORMATICĂ
+Learn&Earn
+RAPORT COMPLEMENTAR DE PROIECTARE
+Echipa 14
+Ghergu Ioana – Laura 506
+Andrei Bianca – Filofteia 506
+
+2025
+Cuprins
+1. Scopul aplicației......................................................................................................................................3
+2. Aria de acoperire a aplicației ................................................................................................................3
+3. Preliminarii.............................................................................................................................................3
+3.1 Specificații de analiză.......................................................................................................................3
+3.2 Specificații de proiectare..................................................................................................................3
+3.3 Specificații tehnologice.....................................................................................................................3
+3.4 Componente de dezvoltare ..............................................................................................................3
+3.5 Componente de testare.....................................................................................................................4
+3.6 Componente de comunicare ............................................................................................................4
+3.7 Componente de învățare..................................................................................................................4
+4. Perspectiva de dezvoltare ......................................................................................................................4
+1. Scopul aplicației
+Aplicația Learn&Earn este o platformă de micro-învățare pentru limbi străine, care
+integrează principii de gamificare pentru a crește motivația și retenția utilizatorilor.
+Aceasta are trei roluri principale: student, profesor și administrator. Profesorii pot crea lecții
+și quiz-uri, iar studenții le pot parcurge pentru a acumula puncte, niveluri și insigne.
+Administratorul are rolul de a modera conținutul și conturile de utilizatori.
+Scopul principal al aplicației este de a oferi un mediu modern, interactiv și competitiv pentru
+învățare, bazat pe feedback instant și progres măsurabil.
+Beneficiarii principali sunt studenții care doresc o metodă eficientă și ludică de învățare,
+precum și profesorii care vor să publice și să evalueze conținut educațional într-un mod dinamic.
+2. Aria de acoperire a aplicației
+Aplicația Learn&Earn permite gestionarea conținutului educațional (lecții și quiz-uri),
+urmărirea progresului utilizatorilor și stimularea prin gamificare.
+Prin intermediul rolurilor definite (student, profesor, admin), aplicația acoperă fluxurile de
+creare, parcurgere și evaluare a conținutului.
+Include funcționalități precum:
+• Căutare și filtrare după tag-uri, nivel de dificultate, durată
+• Sortare după popularitate sau recență
+• Rapoarte de progres și statistici (timp / lecție, rata răspunsurilor corecte, heatmap de
+activitate)
+• Leaderboard săptămânal, insigne și puncte pentru atingerea milestone-urilor
+Aplicația nu include crearea de conținut multimedia complex, integrarea cu platforme
+externe de e-learning sau funcționalități avansate de corectare automată.
+Obiectivul său este realizarea unui MVP stabil, atractiv și demonstrabil, ușor de extins
+ulterior.
+3. Preliminarii
+3.1 Specificații de analiză
+Specificațiile de analiză ale echipei de la licență
+Cerințe funcționale
+Rol: Student
+US 1: Ca student, vreau să pot crea un cont și să mă autentific pentru a accesa lecțiile.
+US 2: Ca student, vreau să pot parcurge lecții și quiz-uri, pentru a-mi verifica
+cunoștințele.
+US 3: Ca student, vreau să primesc puncte și insigne pentru progresul meu.
+US 4: Ca student, vreau să pot vedea un clasament și rapoarte despre activitatea mea.
+Rol: Profesor
+US 5: Ca profesor, vreau să pot crea, edita și șterge lecții și quiz-uri.
+US 6: Ca profesor, vreau să pot vizualiza rezultatele studenților la lecțiile mele.
+Rol: Administrator
+US 7: Ca administrator, vreau să pot gestiona conturile utilizatorilor și rolurile lor.
+US 8: Ca administrator, vreau să pot modera conținutul și vedea rapoartele generale.
+Cerințe non-funcționale
+• Aplicația trebuie să fie intuitivă, responsivă și ușor de folosit.
+• Să ofere timp de răspuns rapid și feedback instant la acțiuni.
+• Să respecte standardele minime de securitate (autentificare sigură, validare
+date).
+• Să fie realizată în .NET Core (backend), React (frontend) și PostgreSQL (bază
+de date).
+Specificațiile de analiză ale echipei de la master
+Metode indirecte de colectare a cerințelor
+În urma feedback-ului primit, au fost analizate aplicații similare, care stimulează
+procesul de învățare al utilizatorilor și utilizează elemente de gamification. Aceste
+aplicații servesc drept sursă de inspirație pentru specificațiile de analiză propuse, în
+special pentru cerințele funcționale legate de stimularea utilizării, retenție și competiție.
+[1] Duolingo: https://www.duolingo.com
+• Reprezintă o referință standard pentru gamificarea procesului de învățare, atât
+pe termen scurt, cât și lung. În acest sens, am preluat mecanismele de acordare
+a punctelor XP, pentru a oferi recompense instantanee în cadrul aplicației
+noastre. De asemenea, sistemele de “Streaks” și “Leagues”, din care ne-am
+inspirat, promovează stimularea activității de învățare, competiția și retenția
+zilnică.
+[2] Kahoot! : https://kahoot.com/
+• Această aplicație promovează competiția în timp real prin introducerea de quizuri, dovedind cât de eficientă este motivația extrinsecă pentru încurajarea
+procesului de învățare. Ea a reprezentat o sursă de inspirație pentru quiz-urile
+introduse în aplicația noastră, pentru feedback-ul imediat la întrebări, dar și
+pentru introducerea clasamentelor de studenți. Implementarea unui mecanism
+de competiție încurajează studenții să mențină un proces de învățare constant.
+[3] FreeCodeCamp: https://www.freecodecamp.org/
+• Validează ideea de a acorda recompense pentru diverse milestones/praguri
+atinse, oferind recunoaștere pe termen lung a efortului depus de utilizator. În
+cadrul aplicației sunt acordate insigne pentru diverse realizări (ex: finalizarea
+unui anumit număr de lecții). Insignele acordate în cadrul aplicației noastre
+pentru atingerea anumitor praguri sunt inspirate din sistemul implementat de
+FreeCodeCamp, și credem că validând efortul depus și timpul petrecut în
+aplicație de către utilizatori putem stimula dorința acestora de a învăța.
+[4] CodeWars: https://www.codewars.com/
+• Oferă clasamente bazate pe performanță și pune accentul pe evoluția nivelului
+de dificultate al problemelor rezolvate. Este un punct de plecare solid pentru
+introducerea clasamentelor în aplicația noastră. Vizualizarea unei poziții clare
+față de ceilalți studenți și față de propriul progres sunt metode care încurajează
+procesul de învățare prin introducerea competitivității.
+Cerințe funcționale
+ROLURI: Student, profesor
+US 1.1: Ca utilizator nou, doresc să îmi pot crea un cont în aplicație folosind email și
+parolă.
+US 1.2: Ca utilizator înregistrat, doresc să mă pot autentifica în aplicație folosind
+email-ul cu care m-am înregistrat și parola.
+US 1.3: Ca utilizator autentificat, doresc să pot vizualiza detaliile profilului meu și să
+mă pot deloga rapid.
+ROL: Student
+US 2.1: Ca student, doresc să pot vizualiza lista cu lecțiile încărcate în platformă,
+pentru a alege ce doresc să învăț.
+US 2.2: Ca student, doresc să pot căuta lecții specifice în funcție de un keyword,
+pentru a găsi rapid conținutul care mă interesează.
+US 2.3: Ca student, doresc să pot filtra lecțiile în funcție de limba care mă interesează,
+dificultate sau durata de parcurgere, pentru a găsi rapid conținutul relevant pentru mine.
+US 2.4: Ca student, doresc să pot deschide și vizualiza o lecție în mod individual,
+pentru a avea acces la conținutul acesteia.
+US 2.5: Ca student, doresc să pot vizualiza materialele atașate unei lecții (ex: imagini,
+fișiere PDF) și/sau să pot descărca din platformă aceste atașamente.
+US 2.6: Ca student, doresc să pot marca manual pe fiecare lecție pe care o parcurg
+secțiunea la care am rămas, ca să știu până unde am reușit să parcurg lecția când revin la
+aceasta.
+US 2.7: Ca student, doresc să pot răspunde la întrebările din quiz-urile asociate
+lecțiilor, pentru a-mi verifica cunoștințele dobândite.
+US 2.8: Ca student, doresc să pot vizualiza rezultatele la quiz-urile pe care le
+completez, pentru a ști exact ce scor am obținut și ce întrebări am greșit.
+US 3.1: Ca student, doresc să primesc puncte XP atunci când trimit un quiz sau
+finalizez de parcurs o lecție, pentru a mă stimula să învăț constant.
+• Sursa: analiza aplicației Duolingo [1]
+US 3.2: Ca student, doresc să primesc automat insigne atunci când ating anumite
+praguri în aplicație (ex: 100% scor la quiz, 5 lecții finalizate, activitate susținută în cadrul
+aplicației etc.), pentru a mă stimula să învăț mai mult, dar și constant.
+• Sursa: analiza aplicației FreeCodeCamp [3]
+US 3.3: Ca student, doresc să pot vizualiza nivelul curent la care mă aflu în profilul
+meu, întrucât m-ar stimula să studiez mai des.
+• Sursa: analiza aplicației Duolingo [1]
+US 3.4: Ca student, doresc să pot vizualiza istoricul punctelor, insignelor și
+bonusurilor primite în aplicație, pentru a avea o evidență clară a realizărilor mele.
+• Sursa: analiza aplicațiilor FreeCodeCamp și Duolingo [3], [1]
+US 4.1: Ca student, doresc să pot accesa clasamente globale și săptămânale, pentru a
+vedea cum mă poziționez față de alți studenți.
+• Sursa: analiza aplicațiilor Kahoot! și CodeWars [2], [4]
+US 4.2: Ca student, doresc să pot vizualiza pe profilul meu insignele pe care le-am
+câștigat, numărul de lecții finalizate și numărul de limbi străine pe care le-am studiat dea lungul timpului.
+US 4.3: Ca student, doresc să pot vizualiza quiz-urile pe care le-am dat și rezultatele
+obținute la acestea, pentru a-mi face o imagine de ansamblu asupra progresului meu de
+învățare.
+US 4.4: Ca student, doresc să pot vizualiza lecțiile pe care le-am parcurs, lecțiile pe
+care le parcurg și stadiul acestora (ex: Finalizată, Începută, În curs de parcurgere), pentru
+a putea reveni ușor la lecțiile care mă interesează.
+ROL: Profesor
+US 5.1: Ca profesor, doresc să pot vizualiza lecțiile din platformă, inclusiv cele ale
+altor profesori, pentru că doresc să îmi extind sfera de cunoaștere.
+US 5.2: Ca profesor, doresc să îmi pot redacta lecțiile direct în cadrul platformei,
+pentru a ușura procesul de redactare.
+US 5.3: Ca profesor, doresc să pot atașa imagini lecțiilor mele, pentru a încuraja
+învățarea vizuală și a-mi completa lecțiile.
+US 5.4: Ca profesor, doresc să pot atașa quiz-uri lecțiilor mele, având posibilitatea de
+a adăuga întrebări și seta răspunsurile corecte.
+US 5.5: Ca profesor, doresc să pot alege limba, dificultatea și durata de parcurgere
+pentru lecțiile pe care le public în platformă.
+US 5.6: Ca profesor, doresc să pot alege timpul limită pentru quiz-uri, pentru a putea
+evalua studenții în limita corectă de timp.
+US 6.1: Ca profesor, doresc să pot vizualiza rezultatele studenților la quiz-urile
+postate și să le pot filtra în funcție de scor.
+US 6.2: Ca profesor, doresc să pot oferi feedback la întrebările pe care studenții le
+greșesc la quiz-uri, pentru a mă asigura că aceștia rețin informația corectă.
+ROL: Administrator
+US 7.1: Ca administrator, doresc să pot vizualiza o listă cu toți utilizatorii înregistrați
+în aplicație și rolurile asociate acestora, pentru a avea o evidență clară a persoanelor care
+utilizează aplicația.
+US 7.2: Ca administrator, doresc să pot permite/suspenda accesul unui utilizator în
+platformă, pentru a putea sancționa corespunzător persoanele care nu respectă regulile
+platformei.
+US 8.1: Ca administrator, doresc să pot vizualiza, edita sau șterge orice lecție sau
+quiz publicate în platfromă, pentru a gestiona conținutul din platformă.
+US 8.2: Ca administrator, doresc să vizualizez rapoarte precum numărul total de
+utilizatori din platformă, totalul lecțiilor publicate, distribuția lecțiilor pe limbi, pentru a
+fi la curent în permanență cu situația platformei.
+Cerințe de calitate
+• Securitate: Asigurarea protecției datelor personale și controlul strict al accesului
+în aplicație pe bază de roluri.
+• Performanță: Timp de răspuns rapid pentru cererile utilizatorilor și optimizarea
+interogărilor pe clasamente.
+• Utilizabilitate: Introducerea unor elemente de gamification care să stimuleze
+procesul de învățare al utilizatorilor. Elementele introduse trebuie să fie motivante
+și ușor de urmărit, pentru a determina utilizatorul să interacționeze cât mai mult
+cu aplicația.
+• Fiabilitate: Disponibilitate ridicată și minimizarea downtime-ului.
+• Scalabilitate: Capacitatea de a susține un număr mare de utilizatori simultan.
+Prioritizarea cerințelor de calitate
+Cele mai importante cerințe de calitate pentru realizarea misiunii aplicației sunt
+următoarele:
+• Securitatea datelor: Aplicația gestionează date personale. Este esențială
+implementarea unei autentificări securizate pentru protecția utilizatorilor și un
+control strict al accesului pe bază de rol pentru a menține integritatea platformei.
+• Utilizabilitatea: Aplicația reprezintă un instrument de învățare; are ca misiune
+creșterea retenției și a motivației de învățare. Este esențială implementarea unor
+mecanisme de gamification, precum acordarea de puncte XP și a insigne pentru
+diferite realizări, de realizare de clasamente care să reflecte performanța
+utilizatorilor în aplicație, astfel încât să fie stimulat procesul de învățare pe termen
+lung și să convingem utilizatorii să interacționeze cât mai des cu aplicația.
+• Performanța: Pentru a oferi o experiență profesională, parcurgerea lecțiilor și a
+quiz-urilor, consultarea clasamentelor, acordarea de recompense și validarea
+quiz-urilor trebuie să se desfășoare fluent, rapid, fără întreruperi sau blocaje.
+Descompunerea cerințelor de calitate în user stories
+• Securitate
+M: Pentru a oferi un mediu de învățare sigur, sistemul trebuie să protejeze datele
+de autentificare ale utilizatorilor.
+US 1: Ca administrator al sistemului, doresc ca informațiile sensibile ale
+utilizatorilor (date personale, email, parolă) să fie gestionate într-un mod sigur,
+pentru a respecta legislația în vigoare și a menține încrederea utilizatorilor în
+aplicația noastră.
+US 1.1: Pentru a asigura gestiunea securizată, trebuie să prevenim accesul
+neautorizat la aceste date.
+US 1.1.1 (Scenariu de calitate): Ca administrator IT, doresc ca sistemul să prevină
+orice tentativă a unui atacator extern de a accesa sau extrage datele sensibile ale
+utilizatorilor, pentru a menține confidențialitatea și integritatea informațiilor.
+M: Sistemul trebuie să diferențieze clar acțiunile posibile în funcție de rolul
+utilizatorului în platformă.
+US 2: Ca profesor, doresc să am control deplin asupra funcțiilor de creare, editare
+și ștergere ale lecțiilor și quiz-urilor, pentru a asigura corectitudinea conținutului
+încărcat în platformă.
+US 2.1: Pentru a asigura integritatea conținutului din platformă, trebuie să
+definim clar permisiunile utilizatorilor în funcție de roluri.
+US 2.1.1 (Scenariu de calitate): Ca administrator IT, doresc ca fiecare utilizator
+să aibă asociat un rol bine definit în platformă și să poată efectua doar acțiunile
+permise de rolul atribuit.
+• Utilizabilitate
+M: Sistemul trebuie să utilizeze elemente de gamification pentru a ghida și motiva
+utilizatorul să urmeze un proces de învățare susținut, transformând efortul depus
+în aplicație în recompense vizibile și imediate.
+US 3: Ca student, doresc să primesc recompense instantanee pentru realizările în
+cadrul aplicației, precum parcugerea unui anumit număr de lecții sau obținerea
+unui scor perfect la quiz-uri, întrucât acestea mă motivează să fiu constant în
+procesul de învățare.
+US 3.1: Pentru a asigura o experiență de învățare bazată pe stimulare, acordarea
+recompenselor și actualizarea pozițiilor în clasamente trebuie să fie imediate,
+precise și convingătoare.
+US 3.1.1 (Scenariu de calitate): Ca Product Owner, doresc ca mecanismele de
+acordare a recompenselor și de realizare a clasamentelor să fie rapide și ușor
+observabile vizual de către utilizatori, pentru a le oferi acestora o experiență
+motivantă, bazată pe progres măsurabil, care să îi stimuleze să ne utilizeze cât mai
+des aplicația.
+• Performanță
+M: Pentru a oferi o experiență de învățare eficientă, răspunsul la acțiunile
+utilizatorilor, precum trimiterea unui quiz sau consultarea clasamentelor, trebuie
+să fie instantaneu.
+US 4: Ca student, doresc ca în momentul în care trimit un quiz, să îmi aflu
+rezultatele imediat, fără să aștept mult timp.
+US 4.1: Pentru susținerea unui proces de învățare activ, timpul dintre trimiterea
+unui răspuns și primirea rezultatelor trebuie să fie minim, aproape insesizabil.
+US 4.1.1 (Scenariu de calitate) : Ca Product Owner, doresc ca acțiunile precum
+consultarea clasamentelor și evaluarea quiz-urilor să se desfășoare rapid, chiar și
+atunci când mai mulți utilizatori folosesc platforma simultan, pentru a asigura
+mulțumirea utilizatorilor și a le oferi o experiență plăcută de utilizare.
+Constrângeri
+• Stack tehnologic fix: Dezvoltarea aplicației trebuie să utilizeze exclusiv
+stack-ul tehnologic stabilit inițial: .NET Core pentru backend, React pentru
+frontend, PostgreSQL pentru baza de date.
+• Protocol API: Interacțiunea dintre backend și frontend trebuie să se realizeze
+exclusiv prin protocolul REST.
+• Autentificare: Sistemul de autentificare trebuie să implementeze obligatoriu
+JWT, iar accesul în aplicație trebuie să fie în funcție de rolul utilizatorului.
+• Elemente de gamification: Aplicația trebuie să implementeze mecanisme de
+acordare a recompenselor, sisteme de realizare de clasamente. Acestea trebuie
+să reflecte un progres măsurabil și să ofere satisfacție imediată utilizatorilor,
+pentru a stimula procesul de învățare.
+• Disponibilitatea echipei de dezvoltare: Proiectul se desfășoară în timpul
+anului academic, deci toate sprint-urile trebuie planificate în perioadele de
+activitate didactică, ținând cont de disponibilitatea echipei de dezvoltare.
+Sarcinile care necesită un efort extins de învățare (ex: microservicii,
+deployment) vor fi amânate, obiectivul principal fiind livrarea unui MVP
+atractiv și demonstrabil.
+• Cunoștințe limitate: Ținând cont de lipsa de experință în privința testării
+unitare a echipei de dezvoltare, va fi prioritizată testarea manuală. Nu se poate
+garanta acoperirea cu teste unitare pentru toate funcționalitățile, dar se vor
+scrie teste unitare pentru componente critice ale sistemului, precum sistemul
+de autentificare/înregistrare.
+3.2 Specificații de proiectare
+User story de analiză (US 1.1.1): Ca administrator IT, doresc ca sistemul să prevină
+orice tentativă a unui atacator extern de a accesa sau extrage datele sensibile ale
+utilizatorilor, pentru a menține confidențialitatea și integritatea informațiilor.
+Descompunerea în user stories de proiectare:
+USP 1.1.1.1 (Tactică: Criptarea datelor la stocare / Hashing): Ca dezvoltator
+backend, doresc să utilizez o librărie de hashing precum BCrypt.Net pentru a stoca toate
+parolele utilizatorilor în baza de date, astfel încât nicio parolă să nu fie vreodată vizibilă
+sau stocată în text clar.
+USP 1.1.1.2 (Tactică: Validarea intrărilor): Ca dezvoltator backend, doresc să
+implementez un middleware de validare pentru toate rutele API care conțin date de la
+utilizatori, astfel încât orice cerere care conține date incorecte sau potențial malițioase să
+fie respinsă și să returneze un status de eroare HTTP 400 (Bad Request) înainte de a ajunge
+la logica de business a aplicației.
+User story de analiză (US 2.1.1): Ca administrator IT, doresc ca fiecare utilizator
+să aibă asociat un rol bine definit în platformă și să poată efectua doar acțiunile permise
+de rolul atribuit.
+Descompunerea în user stories de proiectare:
+USP 2.1.1.1 (Tactică: Gestionarea accesului în aplicație în funcție de rol): Ca
+dezvoltator backend, doresc să protejez endpoint-urile API critice utilizând atribute de
+autorizare ([Authorize(Roles = "Profesor, Admin")]), astfel încât doar utilizatorii cu
+rolurile corecte să poate executa acțiunile respective.
+USP 2.1.1.2 (Tactică: Gestionarea accesului în aplicație în funcție de rol): Ca
+dezvoltator frontend, doresc să implementez route guards, astfel încât rutele de
+administrare (/admin/blocare-utilizator) să nu poată fi vizualizate sau accesate de
+utilizatorii care nu au rol de administrator.
+User story de analiză (US 3.1.1): Ca Product Owner, doresc ca mecanismele de
+acordare a recompenselor și de realizare a clasamentelor să fie rapide și ușor observabile
+vizual de către utilizatori, pentru a le oferi acestora o experiență motivantă, bazată pe
+progres măsurabil, care să îi stimuleze să ne utilizeze cât mai des aplicația.
+Descompunerea în user stories de proiectare:
+USP 3.1.1.1 (Tactică: Feedback vizual imediat al recompensei): Ca dezvoltator
+frontend, doresc ca la finalizarea unei lecții sau a unui quiz, să afișez o animație sau
+notificare pop-up convingătoare, care să evidențieze punctele XP și/sau insigna primită
+pentru progresul atins, oferind astfel feedback vizual instant și satisfacție utilizatorului,
+stimulând un proces de învățare susținut.
+USP 3.1.1.2 (Tactică: Ghidarea utilizatorului prin competiție și progres): Ca
+dezvoltator frontend, doresc să implementez un widget pe pagina principală a
+utilizatorului, care să afișeze progresul curent al XP-ului, locul curent din clasamentul
+săptămânal și global, diferența de XP necesară pentru atingerea următorului nivel, pentru
+a încuraja efortul competitiv și a stimula reutilizarea aplicației.
+User story de analiză (US 4.1.1): Ca Product Owner, doresc ca acțiunile precum
+consultarea clasamentelor și evaluarea quiz-urilor să se desfășoare rapid, chiar și atunci
+când mai mulți utilizatori folosesc platforma simultan, pentru a asigura mulțumirea
+utilizatorilor și a le oferi o experiență plăcută de utilizare.
+Descompunerea în user stories de proiectare:
+USP 4.1.1.1 (Tactică: Paginarea rezultatelor): Ca dezvoltator backend, doresc ca
+funcționalitatea de afișare a clasamentelor să utilizeze paginarea, astfel încât API-ul să
+returneze doar un set mic de rezultate odată (ex: primii 20 de studenți), în loc de a încărca
+toți utilizatorii din sistem, pentru a reduce timpul de răspuns și cantitatea de date
+transferate.
+USP 4.1.1.2 (Tactică: Optimizarea interogării clasamentelor): Ca dezvoltator
+backend, doresc să optimizez interogarea bazei de date pentru clasament prin definirea
+unui index pe coloana care stochează punctajul total (XP) al unui utilizator, astfel încât
+sortarea utilizatorilor să se realizeze rapid, fără a fi nevoie ca baza de date să scaneze
+întreaga tabelă de utilizatori de fiecare dată.
+3.3 Specificații tehnologice
+Specificațiile tehnice preluate de la echipa de la licență
+• Backend: .Net Core
+• Frontend: React
+• Bază de date: PostgreSQL
+• ORM: Entity Framework Core
+• Tip API: REST
+• Securitate: autentificare JWT, role-based access control, stocare parole cu
+bcrypt/Argon2, CORS strict, rate-limiting
+• Containerizare: Docker, Kubernetes pentru etapa de producție
+Recomandări
+Ținând cont de experiența și de cunoștințele echipei de la licență, echipa de la master
+recomandă simplificarea stack-ului tehnologic prin eliminarea etapei de containerizare.
+Considerăm restul specificațiilor adecvate pentru dezvoltarea platformei Learn&Earn
+și recomandăm următoarele:
+• Ca alternativă pentru backend recomandăm Java cu Spring Boot
+• Pentru construirea interfeței mai rapid, recomandăm integrarea Bootstrap
+• Pentru versionarea și găzduirea codului: Git și Github
+• Ca medii de dezvoltare: Visual Studio Code pentru construirea frontend-ului,
+Visual Studio 2022 pentru construirea backend-ului, IntelliJ IDEA dacă se
+consideră alternativa cu Java și Spring Boot
+• Pentru testarea API, recomandăm Postman
+• Pentru gestionarea bazei de date, recomandăm instalarea locală sau Azure Data
+Studio
+• Pentru construirea frontend-ului, este necesară instalarea Node.js
+• Pentru testele unitare și de integrare, recomandăm xUnit sau NUnit.
+3.4 Componente de dezvoltare
+Componentele principale
+• Backend
+o IdentityService: se ocupă de autentificare, stabilirea rolurilor, hash-uirea
+parolelor și refresh tokens
+o ContentService: se ocupă de gestiunea lecțiilor, a tag-urilor, de
+publicarea, căutarea, listarea și filtrarea lecțiilor în funcție de opțiunile
+utilizatorului
+o QuizService: se ocupă de gestiunea quiz-urilor și întrebărilor asociate
+acestora, precum și de evaluarea rezultatelor și oferirea scorului
+o GamificationService: se ocupă de gestiunea punctelor și recompenselor
+din aplicație pentru fiecare utilizator, precum XP și insigne pentru diverse
+realizări, de gestiunea clasamentelor
+o ReportingService: se ocupă de gestiunea progresului utilizatorilor, de
+realizarea statisticilor agregate, de gestiunea istoricului de lecții și quizuri pentru fiecare utilizator
+o FileService (opțional): utilizat pentru gestiunea atașamentelor precum
+imaginile sau fișierele PDF
+o UserService: se ocupă de gestiunea utilizatorilor, crearea conturilor
+• Frontend
+o Route Guards: se ocupă de navigarea în aplicație și protejarea rutelor în
+funcție de rol
+o Pagini: crearea individuală de pagini pentru autentificare, lecții, quiz-uri,
+clasamente, profil, admin
+• Data access layer: stratul responsabil cu interacțiunea cu baza de date. Include
+ORM-ul (EF Core), definirea DTO-urilor, a validatorilor și gestionarea
+migrațiilor bazei de date
+• Cross-cutting: componente partajate, folosite de toate serviciile API (ex:
+sistemul de logging, managementul centralizat al erorilor, configurarea CORS)
+Specificația de analiză / proiectare Componentele de dezvoltare
+US 1.1: Ca utilizator nou, doresc să îmi pot
+crea un cont în aplicație folosind email și
+parolă.
+UserService, Pagina
+Înregistrare
+US 1.2: Ca utilizator înregistrat, doresc să mă
+pot autentifica în aplicație folosind email-ul cu
+care m-am înregistrat și parola.
+IdentityService, Pagina Login
+US 1.3: Ca utilizator autentificat, doresc să pot
+vizualiza detaliile profilului meu și să mă pot
+deloga rapid.
+IdentityService, Pagina
+Profil, Route Guards
+US 2.1: Ca student, doresc să pot vizualiza
+lista cu lecțiile încărcate în platformă, pentru a
+alege ce doresc să învăț.
+ContentService, Pagina Lecții
+US 2.2: Ca student, doresc să pot căuta lecții
+specifice în funcție de un keyword, pentru a
+găsi rapid conținutul care mă interesează.
+ContentService, Pagina Lecții
+US 2.3: Ca student, doresc să pot filtra lecțiile
+în funcție de limba care mă interesează,
+dificultate sau durata de parcurgere, pentru a
+găsi rapid conținutul relevant pentru mine.
+ContentService, Pagina Lecții
+US 2.4: Ca student, doresc să pot deschide și
+vizualiza o lecție în mod individual, pentru a
+avea acces la conținutul acesteia.
+ContentService, Pagina
+Individuală Lecție
+US 2.5: Ca student, doresc să pot vizualiza
+materialele atașate unei lecții (ex: imagini,
+fișiere PDF) și/sau să pot descărca din
+platformă aceste atașamente.
+FileService, Pagina
+Individuală Lecție
+US 2.6: Ca student, doresc să pot marca
+manual pe fiecare lecție pe care o parcurg
+secțiunea la care am rămas, ca să știu până
+unde am reuțit să parcurg lecția când revin la
+aceasta.
+ContentService, Pagina
+Individuală Lecție
+US 2.7: Ca student, doresc să pot răspunde la
+întrebările din quiz-urile asociate lecțiilor,
+pentru a-mi verifica cunoștințele dobândite.
+QuizService, Pagina Quiz
+US 2.8: Ca student, doresc să pot vizualiza
+rezultatele la quiz-urile pe care le completez,
+pentru a ști exact ce scor am obținut și ce
+întrebări am greșit.
+QuizService, Pagina Rezultat
+Quiz
+US 3.1: Ca student, doresc să primesc puncte
+XP atunci când trimit un quiz sau finalizez de
+parcurs o lecție, pentru a mă stimula să învăț
+GamificationService,
+QuizService
+constant.
+US 3.2: Ca student, doresc să primesc automat
+insigne atunci când ating anumite praguri în
+aplicație (ex: 100% scor la quiz, 5 lecții
+finalizate, activitate susținută în cadrul
+aplicației etc.), pentru a mă stimula să învăț
+mai mult, dar și constant.
+GamificationService
+US 3.3: Ca student, doresc să pot vizualiza
+nivelul curent la care mă aflu în profilul meu,
+întrucât m-ar stimula să studiez mai des.
+GamificationService, Pagina
+Profil
+US 3.4: Ca student, doresc să pot vizualiza
+istoricul punctelor, insignelor și bonusurilor
+primite în aplicație, pentru a avea o evidență
+clară a realizărilor mele.
+ReportingService, Pagina
+Profil
+US 4.1: Ca student, doresc să pot accesa
+clasamente globale și săptămânale, pentru a
+vedea cum mă poziționez față de alți studenți.
+GamificationService, Pagina
+Leaderboard
+US 4.2: Ca student, doresc să pot vizualiza pe
+profilul meu insignele pe care le-am câștigat,
+numărul de lecții finalizate și numărul de limbi
+străine pe care le-am studiat de-a lungul
+timpului.
+ReportingService,
+GamificationService, Pagina
+Profil
+US 4.3: Ca student, doresc să pot vizualiza
+quiz-urile pe care le-am dat și rezultatele
+obținute la acestea, pentru a-mi face o imagine
+de ansamblu asupra progresului meu de
+învățare.
+ReportingService, Pagina
+Profil
+US 4.4: Ca student, doresc să pot vizualiza
+lecțiile pe care le-am parcurs, lecțiile pe care
+le parcurg și stadiul acestora (ex: Finalizată,
+Începută, În curs de parcurgere), pentru a
+putea reveni ușor la lecțiile care mă
+interesează.
+ReportingService, Pagina
+Profil
+US 5.1: Ca profesor, doresc să pot vizualiza
+lecțiile din platformă, inclusiv cele ale altor
+profesori, pentru că doresc să îmi extind sfera
+de cunoaștere.
+ContentService, Pagina Lecții
+US 5.2: Ca profesor, doresc să îmi pot redacta
+lecțiile direct în cadrul platformei, pentru a
+ContentService, Pagina
+Gestionare Lecții
+ușura procesul de redactare.
+US 5.3: Ca profesor, doresc să pot atașa
+imagini lecțiilor mele, pentru a încuraja
+învățarea vizuală și a-mi completa lecțiile.
+FileService, ContentService
+US 5.4: Ca profesor, doresc să pot atașa quizuri lecțiilor mele, având posibilitatea de a
+adăuga întrebări și seta răspunsurile corecte.
+QuizService, Pagina
+Gestionare Lecții
+US 5.5: Ca profesor, doresc să pot alege
+limba, dificultatea și durata de parcurgere
+pentru lecțiile pe care le public în platformă.
+ContentService, Pagina
+Gestionare Lecții
+US 5.6: Ca profesor, doresc să pot alege
+timpul limită pentru quiz-uri, pentru a putea
+evalua studenții în limita corectă de timp.
+QuizService, Pagina
+Gestionare Lecții
+US 6.1: Ca profesor, doresc să pot vizualiza
+rezultatele studenților la quiz-urile postate și
+să le pot filtra în funcție de scor.
+ReportingService, Pagina
+Rezultate Studenți
+US 6.2: Ca profesor, doresc să pot oferi
+feedback la întrebările pe care studenții le
+greșesc la quiz-uri, pentru a mă asigura că
+aceștia rețin informația corectă.
+QuizService, Pagina
+Gestionare Lecții
+US 7.1: Ca administrator, doresc să pot
+vizualiza o listă cu toți utilizatorii înregistrați
+în aplicație și rolurile asociate acestora, pentru
+a avea o evidență clară a persoanelor care
+utilizează aplicația.
+UserService, Pagina
+Administrare Utilizatori
+US 7.2: Ca administrator, doresc să pot
+permite/suspenda accesul unui utilizator în
+platformă, pentru a putea sancționa
+corespunzător persoanele care nu respectă
+regulile platformei.
+UserService, Pagina
+Administrare Utilizatori
+US 8.1: Ca administrator, doresc să pot
+vizualiza, edita sau șterge orice lecție sau quiz
+publicate în platfromă, pentru a gestiona
+conținutul din platformă.
+ContentService, QuizService,
+Pagina Admin
+US 8.2: Ca administrator, doresc să vizualizez
+rapoarte precum numărul total de utilizatori
+din platformă, totalul lecțiilor publicate,
+distribuția lecțiilor pe limbi, pentru a fi la
+ReportingService, Pagina
+Admin
+curent în permanență cu situația platformei.
+USP 1.1.1.1 (Tactică: Criptarea datelor la
+stocare / Hashing): Ca dezvoltator backend,
+doresc să utilizez o librărie de hashing precum
+BCrypt.Net pentru a stoca toate parolele
+utilizatorilor în baza de date, astfel încât nicio
+parolă să nu fie vreodată vizibilă sau stocată în
+text clar.
+IdentityService
+USP 1.1.1.2 (Tactică: Validarea intrărilor):
+Ca dezvoltator backend, doresc să
+implementez un midleware de validare pentru
+toate rutele API care conțin date de la
+utilizatori, astfel încât orice cerere care conține
+date incorecte sau potențial malițioase să fie
+respinsă și să returneze un status de eroare
+HTTP 400 (Bad Request) înainte de a ajunge
+la logica de business a aplicației.
+Cross-cutting, Data Access
+Layer
+USP 2.1.1.1 (Tactică: Gestionarea accesului
+în aplicație în funcție de rol): Ca dezvoltator
+backend, doresc să protejez endpoint-urile API
+critice utilizând atribute de autorizare
+([Authorize(Roles = "Profesor, Admin")]),
+astfel încât doar utilizatorii cu rolurile corecte
+să poate executa acțiunile respective.
+Cross-cutting,
+IdentityService
+USP 2.1.1.2 (Tactică: Gestionarea accesului
+în aplicație în funcție de rol): Ca dezvoltator
+frontend, doresc să implementez route guards,
+astfel încât rutele de administrare
+(/admin/blocare-utilizator) să nu poată fi
+vizualizate sau accesate de utilizatorii care nu
+au rol de administrator.
+Route Guards,
+IdentityService
+USP 3.1.1.1 (Tactică: Feedback vizual
+imediat al recompensei): Ca dezvoltator
+frontend, doresc ca la finalizarea unei lecții sau
+a unui quiz, să afișez o animație sau notificare
+pop-up convingătoare, care să evidențieze
+punctele XP și/sau insigna primită pentru
+progresul atins, oferind astfel feedback vizual
+instant și satisfacție utilizatorului, stimulând un
+proces de învățare susținut.
+Frontend,
+GamificationService
+USP 3.1.1.2 (Tactică: Ghidarea
+utilizatorului prin competiție și progres): Ca
+Frontend,
+GamificationService
+dezvoltator frontend, doresc să implementez un
+widget pe pagina principală a utilizatorului,
+care să afișeze progresul curent al XP-ului,
+locul curent din clasamentul săptămânal și
+global, diferența de XP necesară pentru
+atingerea următorului nivel, pentru a încuraja
+efortul competitiv și a stimula reutilizarea
+aplicației.
+USP 4.1.1.1 (Tactică: Paginarea
+rezultatelor): Ca dezvoltator backend, doresc
+ca funcționalitatea de afișare a clasamentelor
+să utilizeze paginarea, astfel încât API-ul să
+returneze doar un set mic de rezultate odată
+(ex: primii 20 de studenți), în loc de a încărca
+toți utilizatorii din sistem, pentru a reduce
+timpul de răspuns și cantitatea de date
+transferate.
+GamificationService, Data
+Access Layer
+USP 4.1.1.2 (Tactică: Optimizarea
+interogării clasamentelor): Ca dezvoltator
+backend, doresc să optimizez interogarea
+bazei de date pentru clasament prin definirea
+unui index pe coloana care stochează
+punctajul total (XP) al unui utilizator, astfel
+încât sortarea utilizatorilor să se realizeze
+rapid, fără a fi nevoie ca baza de date să
+scaneze întreaga tabelă de utilizatori de fiecare
+dată.
+Data Access Layer
+3.5 Componente de testare
+Pentru a testa logica de funcționare a feature-urilor implementate, propunem
+următoarele metode și instrumente de testare:
+• Testare manuală: aplicată universal, pe întreaga durată a fiecărui sprint. Este
+prioritară din cauza constrângerilor de cunoștințe. Strategia se bazează pe
+verificarea interacțiunii utilizatorului cu aplicația și a funcționalităților critice.
+SPRINT SCENARII DE TESTARE
+SPRINT 1
+(Securitate și profil utilizator)
+Înregistrare/ Autentificare: Se testează
+înregistrarea și autentificarea cu date valide, cu date
+invalide (ex: email incorect), cu parolă greșită la
+autentificare, se verifică dacă datele afișate pe
+pagina de profil a unui utilizator sunt corecte, se
+verifică dacă un utilizator se poate deloga rapid, se
+verifică validările aplicate pe formularul de
+înregistrare și autentificare.
+SPRINT 2
+(Vizualizare lecții, acces în
+funcție de roluri și creare
+conținut)
+Vizualizarea conținutului din aplicație: Se
+testează dacă toate lecțiile sunt listate corect pe
+pagina principală, se verifică dacă o lecție
+individuală poate fi accesată, se verifică dacă datele
+individuale despre o lecție, precum dificultatea sau
+timpul de parcurgere, sunt vizibile pentru utilizatori
+și sunt afișare corespunzător.
+Navigație și Filtrare: Se testează dacă meniul
+afișează secțiunile corecte, dacă accestea sunt
+accesabile și dacă redirecționează către paginile
+corespunzătoare. Se testează dacă filtrele pentru
+lecții (limbă, dificultate, durată) și căutarea
+returnează rezultatele corecte.
+Route Guards: Se verifică dacă rutele accesibile
+doar pe baza anumitor roluri pot fi accesate și de
+roluri nepermise (ex: accesarea paginii de publicare
+a unei lecții de către un student, accesarea
+dashboard-ului admin-ului din rolul de student sau
+profesor)
+Fluxul pentru profesor: Se testează în întregime
+fluxul rolului de profesor în privința creării unei
+lecții. Se verifică interacțiunea cu editorul de text
+pentru scrierea lecțiilor, dacă pot fi setate durata și
+dificultatea pentru o lecție, publicarea cu succes. Se
+verifică validările aplicate pe câmpurile unei lecții,
+precum existența titlului, setarea obligatorie a
+nivelului de dificultate, setarea obligatorie a limbii
+străine pentru care este publicată lecția.
+SPRINT 3
+(Creare quiz-uri și
+recompensare)
+Fluxul adăugării unui quiz: Se verifică atașarea
+unui quiz la o lecție existentă, adăugarea
+întrebărilor, setarea răspunsurilor corecte.
+Fluxul pentru student: Se testează parcurgerea
+unei lecții individuale și a unui quiz. Se testează
+dacă răspunsurile pentru quiz sunt înregistrare
+corect, se verifică trimiterea cu succes a rezolvărilor
+la quiz, se testează primirea evaluării în cadrul quizului.
+SPRINT 4
+(Administrare și feedback
+profesor)
+Flux de gestiune admin: Se testează interfața de
+gestionare a utilizatorilor și conținutului. Se
+verifică acordarea de roluri, blocarea unui
+utilizator, deblocarea unui utilizator, ștergerea și
+editarea lecțiilor și a quiz-urilor.
+Feedback manual oferit de profesor: Se verifică
+dacă vizulizarea răspunsurilor la un quiz pentru
+rolul de profesor este corectă, se testează oferirea
+de feedback individual, punctual la fiecare întrebare
+greșită, se testează dacă feedback-ul este publicat
+cu succes și ajunge la student.
+SPRINT 5
+(Gamification și clasamente)
+Feedback vizual imediat: Se testează dacă odată cu
+finalizarea unui quiz apare pop-ul care notifică
+utilizatorul câte puncte a primit, se verifică dacă
+acesta obturează conținutul și cât de repede apare
+după finalizarea acțiunii. Se verifică dacă punctele
+acordate sunt corecte pentru acțiunea îndeplinită.
+Progres și Clasamente: Se verifică dacă widget-ul
+de progres de pe pagina principală este actualizat
+corect odată cu primirea unei recompense. Se
+verifică dacă numărul de puncte XP, locul curent al
+utilizatorului în clasamente, diferența de XP de care
+este nevoie până la atingerea următorului nivel sunt
+recalculate corect odată ce utilizatorul primește o
+recompensă. Se verifică dacă la atingerea unui
+anumit prag (ex: 5 lecții finalizate), utilizatorul
+primește insigna corespunzătoare.
+SPRINT 6
+(Rapoarte și optimizare)
+Rapoarte: Se verifică pe pagina de profil a unui
+utilizator dacă istoricul punctelor/insignelor este
+complet și listat în ordine cronologică. Se verifică
+dacă statusul unei lecții este actualizat
+corespunzător după finalizarea unei secțiuni din
+lecție sau a întregii lecții.
+Paginare: Se verifică vizual că lista de clasamente
+este paginată, că se afișează un număr limitat de
+studenți pe o pagină și că navigarea la o altă pagină
+oferă rezultatele corespunzătoare.
+• Testare API: testarea independentă a endpoint-urilor definite, utilizând Postman
+SPRINT SCENARII DE TESTARE
+SPRINT 1
+(Securitate)
+Se testează metodele POST pentru endpoint-urile
+definite pentru autentificare și înregistrare prin
+trimiterea de date invalide, pentru a confirma că
+API-ul returnează HTTP 400 Bad Request înainte
+de a ajunge la logica de business.
+SPRINT 2
+(Autorizare roluri)
+Se utilizează un token de Student pentru a încerca
+accesarea unei rute protejate, precum cea de creare
+a unei lecții. Se așteaptă răspuns HTTP 403
+Forbidden. Se utilizează un token de
+Profesor/Admin pentru a testa aceeași rută și se
+așteaptă răspuns HTTP 200 OK.
+SPRINT 4
+(Administrare)
+Se testează endpoint-urile accesibile admin-ului cu
+tokeni de Student și Profesor, se așteaptă răspuns
+HTTP 403 Forbidden. Se testează aceleași
+endpoint-uri cu token Admin și se așteaptă răspuns
+HTTP 200 OK.
+SPRINT 6
+(Clasamente)
+Se testează metoda GET pentru endpoint-urile
+definite pentru listarea clasamentelor, se verifică că
+numărul de rezultate returnate corespunde cu limita
+stabilită în cadrul paginării.
+• Testare unitară: scrierea de teste unitare pentru funcționalitățile implementate,
+utilizând xUnit sau NUnit, împreună cu NSubstitute sau Moq pentru mocking
+SPRINT SCENARII DE TESTARE
+SPRINT 1
+(Securitate)
+Se vor scrie teste unitare pentru testarea funcției de
+hashing a parolelor și pentru a testa funcția de
+verificare a parolelor, care compară parola
+introdusă de utilizator la conectare cu parola
+criptată, stocată în baza de date a aplicației.
+SPRINT 3
+(Evaluare răspunsuri quiz)
+Se testează logica care evaluează automat
+răspunsurile unui student la un quiz. Se vor
+considera scenariile pentru răspuns corect (scor
+maxim pe întrebare), răspuns greșit (scor 0), se va
+verifica dacă punctajul total acordat pe un quiz este
+corect.
+SPRINT 5
+(Gamification)
+Se testează logica de acordare a punctelor XP și
+insignelor. Se testează dacă activitățile pentru care
+se acordă recompense returnează numărul corect de
+puncte, se testează funcția care verifică milestoneurile/pragurile atinse. Se verifică că insigna este
+acordată o singură dată și doar la atingerea
+pragului.
+3.6 Componente de comunicare
+Comunicare sincronă
+Toate ședințele de comunicare sincronă vor fi realizate pe MS Teams.
+• Sprint Planning
+o Are loc la începutul fiecărui sprint
+o Discutăm obiectivele pentru sprint-ul curent, împărțim task-urile și ne
+asigurăm că întreaga echipă a înțeles ce are de făcut.
+• Sprint Review
+o Are loc la finalul fiecărui sprint
+o Discutăm ce obiective am reușit să realizăm din ce ne propusesem la
+începutul sprint-ului, oferim feedback, stabilim ce se întâmplă cu taskurile nefinalizate din sprint-ul curent, evaluăm problemele întâmpinate,
+ajustăm backlog-ul și prioritățile pentru task-uri dacă este necesar
+• Sprint Retrospective
+o Are loc la finalul fiecărui sprint, imediat după Sprint Review
+o Discutăm despre interacțiunea și comunicarea între membrii echipei,
+identificăm ce a mers bine, ce probleme au fost întâmpinate și ce a cauzat
+aceste probleme. Încercăm să facilităm colaborarea între membrii echipei
+dacă este cazul, să identificăm ce și cum putem îmbunătăți pentru sprinturile viitoare
+• Weekly SCRUM
+o Înlocuiește Daily SCRUM-ul, are loc o singură dată, la mijlocul fiecărui
+sprint
+o Discutăm progresul, stadiul în care ne aflăm cu atingerea obiectivelor
+stabilite, clarificăm impedimente sau eventuale blocaje ale echipei de
+dezvoltare
+Comunicare asincronă
+• Task Management
+o Ține evidența clară a task-urilor din backlog și a membrilor din echipa de
+dezvoltare care lucrează la ele
+o Instrumente recomandate: Trello, Jira
+• Code Management
+o Util pentru versionarea codului, preluarea codului cu noi funcționalități
+implementate sau code reviews
+o Instrumente recomandate: Github
+• Team Groupchat
+o Util pentru întrebări rapide, clarificări și notificări
+o Instrumente utilizate: Whatsapp
+o Instrumente recomandate: Discord, Slack
+3.7 Componente de învățare
+În urma feedback-ului primit și a evaluării nivelului de cunoștințe al echipei de la
+licență, echipa de la master recomandă preponderent activități de învățare individuală,
+precum parcurgerea de articole și tutoriale video, dar și consultarea documentațiilor
+oficiale.
+Ca punct de plecare, oferim următoarele materiale de studiu obligatorii:
+DOMENIU
+L DE
+STUDIU
+RESURSA
+MEMBR
+U
+ECHIPĂ
+Testare
+unitară
+1. Unit Testing .NET Core with XUnit:
+https://www.dandoescode.com/blog/xunit-unittesting/part-one
+2. Unit Testing: https://learn.microsoft.com/enus/dotnet/architecture/maui/unit-testing
+Cristi
+George
+Rareș
+Elemente de
+gamification
+1. Essential Guide to Gamification Design in 2024:
+https://xperiencify.com/gamification-design/
+2. How to implement gamification components in a
+professional online community:
+https://www.youtube.com/watch?v=zA3fwG_DJ
+1Y
+Cristi
+George
+Rareș
+Route
+Guards
+React Protected Routes | Role-Based Autorization:
+https://www.youtube.com/watch?v=oUZjO00NkhY
+Cristi
+George
+Rareș
+React
+1. Documentația oficială: https://react.dev/learn
+2. React Tutorial For Beginners:
+https://www.youtube.com/watch?v=SqcY0GlET
+Pk
+Cristi
+Paginare
+Pagination in .NET: With and Without Entitiy
+Framework: https://www.csharpcorner.com/blogs/pagination-in-net-with-andwithout-entity-framework
+Cristi
+Rareș
+Definirea
+unui index
+pe baza de
+date
+Extremely Fast Paging With Cursor Paging and
+Database Index Seek:
+https://www.youtube.com/watch?v=gfRJBoOuNUA
+Cristi
+George
+Rareș
+Ca resurse opționale, în cazul în care un membru al echipei de dezvoltare dorește să
+se documenteze mai mult în timpul liber, recomandăm:
+• React
+o Articole
+▪ Tutorial: Create an ASP.NET Core app with React in Visual
+Studio:
+https://learn.microsoft.com/en-us/visualstudio/javascript/tutorialasp-net-core-with-react?view=vs-2022
+o Cursuri
+▪ Building React Application using ASP.NET MVC5:
+https://www.coursera.org/learn/react-mvcapp?campaignid=20882109092&adgroupid=&device=c&keywor
+d=&matchtype=&network=x&devicemodel=&creativeid=&asset
+groupid=6485735763&targetid=&extensionid=&placement=&ga
+d_campaignid=20875558740
+o Tutoriale video
+▪ React with .NET Web API:
+https://www.youtube.com/watch?v=4RKuyp_bOhY
+• .NET Core
+o Documentația oficială: https://learn.microsoft.com/en-us/dotnet/
+o Tutoriale video
+▪ Build REST APIs in .NET 9:
+https://www.youtube.com/watch?v=38GNKtclDdE
+▪ .NET 9 Web API & Entity Framework:
+https://www.youtube.com/watch?v=AKjG2tjI07U
+o Articole
+▪ Integrating PostgreSQL with .NET:
+https://dev.to/vzldev/integrating-postgresql-with-a-net-a-step-by-
+step-guide-3hep
+• Elemente de gamification
+o Articole
+▪ Design patterns to support gamification-based learning activities:
+https://riull.ull.es/xmlui/handle/915/4770
+• Testare
+o Documentația oficială xUnit: https://xunit.net/
+o Documentația oficială NSubstitute: https://nsubstitute.github.io/
+o Articole
+▪ Testing in .NET:
+https://learn.microsoft.com/en-us/dotnet/core/testing/
+▪ Unit Testing:
+https://learn.microsoft.com/en-us/dotnet/architecture/maui/unittesting
+4. Perspectiva de dezvoltare
+EPIC 1
+Perioada de desfășurare: 17.11.2025 - 23.12.2025
+Scopul primului EPIC constă în implementarea fluxului critic al aplicației, acoperind
+autentificarea și gestionarea conținutului de bază, în vederea demonstrării unui scenariu
+funcțional complet și stabil.
+Primul EPIC cuprinde 3 SPRINT-uri, iar obiectivele principale ale acestuia sunt:
+• Fundația platformei și securitatea de bază, constând în fluxul complet de autentificare
+și înregistrare, precum și validarea și securizarea datelor
+• Fluxul interacțiunii studentului cu conținutul: filtrarea lecțiilor, vizualizarea unei lecții
+și a progresului, rezolvarea unui quiz și accesul la rezultate, recompensarea activității
+de bază
+• Fluxul interacțiunii profesorului cu materialul: gestionarea lecțiilor și a quiz-urilor
+• Controlul accesului: autorizarea în baza rolurilor, dar și protecția rutelor din interfață
+SPRINT 1
+Perioada de desfășurare: 17.11.2025 - 27.11.2025
+Scopul primului SPRINT este acela de a stabili fundația tehnică securizată și livrarea
+funcționalității de bază a sistemului de autentificare.
+Obiective specifice
+Înregistrare/Autentificare și
+Profil
+Securizarea datelor
+US 1.1
+US 1.2
+US 1.3
+USP 1.1.1.1
+USP 1.1.1.2
+Activități de
+dezvoltare
+Înregistrare,
+Autentificare,
+Vizualizare Profil
+Hashing-ul parolelor,
+Validarea datelor de intrare
+Activități de testare
+Testarea manuală a tuturor scenariilor de validitate a datelor pentru
+procesul de înregistrare/autentificare
+Testarea API a rutelor pentru înregistrare/autentificare
+Testarea unitară a funcției de hashing și a mecanismului de
+verificare a parolei
+Activități de învățare
+Parcurgerea materialelor pentru testarea unitară de către toți
+membrii echipei, așa cum reiese din tabelul destinat împărțirii
+resurselor în funcție de necesitățile de învățare ale fiecărui membru
+Parcurgerea opțională a tutorialelor pentru crearea unei aplicații în
+ASP.NET, pentru aprofundare
+Întâlniri
+SPRINT Planning - 17.11.2025
+Weekly SCRUM - 23.11.2025
+SPRINT Review - 27.11.2025
+SPRINT Retrospective – 27.11.2025
+SPRINT 2
+Perioada de desfășurare: 28.11.2025 - 06.12.2025
+Scopul celui de-al doilea SPRINT este autorizarea accesului în funcție de rolul în cadrul
+aplicației, precum și crearea, vizualizarea și filtrarea lecțiilor.
+Obiective specifice
+Autorizare Creare conținut Filtrare conținut și
+vizualizare lecție
+individuală
+USP 2.1.1.1
+USP 2.1.1.2
+US 5.2
+US 5.5
+US 2.1
+US 2.2
+US 2.3
+US 2.4
+US 5.1
+Activități de
+dezvoltare
+Controlul accesului în
+funcție de rol la nivel
+de API,
+Controlul accesului la
+nivel de Frontend
+Implementarea
+funcționalității de
+redactare a lecțiilor,
+Configurarea
+detaliilor unei lecții
+(limbă, dificultate,
+durată parcurgere)
+Afișarea unei lecții
+individuale,
+Listarea lecțiilor,
+Căutarea și filtrarea
+lecțiilor,
+Implementare
+navigare de bază între
+paginile principale ale
+aplicației
+Activități de testare
+Testarea manuală a vizualizării și filtrării conținutului, a navigării în
+cadrul aplicației, a accesului la rute din perspectiva frontend, precum
+și a întregului flux de creare a unei lecții din perspectiva unui profesor
+Testarea API a accesibilității în funcție de rol
+Activități de
+învățare
+Vizualizarea documentației și a unui tutorial pentru începători de către
+membrii echipei care nu au experiență în React (Cristi)
+Vizionarea unui tutorial pentru autorizarea bazată pe roluri din
+perspectiva frontend pentru membrii care nu au mai lucrat cu Route
+Guards (Cristi, Rareș)
+Întâlniri SPRINT Planning - 27.11.2025
+Weekly SCRUM - 02.12.2025
+SPRINT Review - 06.12.2025
+SPRINT 3
+Perioada de desfășurare: 07.12.2025 - 16.12.2025
+Scopul celui de-al treilea SPRINT este de a permite marcarea progresului parcurgerii
+materialelor, crearea și rezolvarea quiz-urilor, mecanismul de bază pentru recompensare, dar și
+vizualizarea rezultatelor și stadiului materialelor parcurse.
+Obiective specifice
+Marcare progres
+parcurgere și creare quiz
+Rezolvare quiz și
+recompensarea
+activității de bază
+Vizualizare lecții și
+quiz-uri parcurse
+US 2.6
+US 5.4
+US 5.6
+US 2.7
+US 2.8
+US 3.1
+US 3.2
+US 4.3
+US 4.4
+Acivități de
+dezvoltare
+Creare quiz,
+Configurare durată quiz
+Marcarea manuală de
+către studenți a
+secțiunilor unei lecții
+pentru a facilita
+parcurgerea materialului
+Parcurgerea și
+rezolvarea unui
+quiz,
+Vizualizarea
+rezultatelor
+individuale,
+Stabilire misiuni și
+praguri pentru
+câștigarea
+insignelor,
+Acordarea XP
+pentru parcurgerea
+lecțiilor și
+rezolvarea quizurilor
+Listarea lecțiilor
+parcurse,
+Listarea quiz-urilor
+date,
+Listarea rezultatelor
+pentru fiecare quiz,
+Afișarea statusului
+conținutului parcurs
+Activități de testare
+Testarea manuală a fluxului de creare a unui quiz și a fluxului unui
+student
+Testarea unitară a corectitudinii evaluării unui quiz și a
+mecanismului pentru recompensare
+Activități de învățare Vizualizarea materialelor recomandate pentru implementarea
+elementelor de gamification de către toți membrii echipei
+Întâlniri
+SPRINT Planning - 07.12.2025
+Weekly SCRUM - 10.12.2025
+SPRINT Review - 16.12.2025
+SPRINT Retrospective – 16.12.2025
+Adițional, la finalul acestui EPIC are loc ședința de EPIC Review, în data de 17.12.2025.
+EPIC 2
+Perioada de desfășurare: 08.01.2026 - 06.02.2026
+Scopul celui de-al doilea EPIC constă în implementarea funcționalităților mai avansate,
+precum Gamification și Administrarea sistemului, asigurând stabilitate și performanță optimă
+pentru livrarea finală.
+Acest EPIC cuprinde, de asemenea, 3 SPRINT-uri și are următoarele obiective:
+• Administrarea și gestiunea sistemului: moderare utilizatori și conținut, generare
+rapoarte generale
+• Detalierea funcționalității de Gamification și creșterea performanței, constând în
+finisarea logicii de recompensare, ordonarea studenților în funcție de activitate și
+îmbunătățirea experienței de vizualizare a activității și a rezultatelor
+• Vizualizarea progresului și oferirea de feedback
+SPRINT 4
+Perioada de desfășurare: 08.01.2026 - 17.01.2026
+Scopul acestui SPRINT este de a implementa funcționalitățile de administrare și
+moderare a sistemului, monitorizarea răspunsurilor de către profesori și opțiunea de a oferi
+feedback.
+Obiective specifice
+Gestiune utilizatori Administrare
+lecții și quiz-uri
+Vizualizarea
+răspunsuri la quiz-uri
+și oferire feedback
+US 7.1
+US 7.2
+US 8.2
+US 8.1 US 6.1
+US 6.2
+Activități de
+dezvoltare
+Listarea utilizatorilor și
+a rolurilor acestora,
+Controlul accesului
+utilizatorilor la
+platformă de către
+administrator,
+Vizualizarea datelor
+generale cu scop
+administrativ
+Accesul
+administratorului
+la gestionarea
+conținutului din
+platformă
+Afișarea
+răspunsurilor date de
+către un student la un
+quiz,
+Adăugare feedback
+punctual la
+întrebările cu
+răspuns greșit
+Activități de testare
+Testarea manuală a fluxului de gestiune administrativă, precum și a
+feedback-ului manual oferit de profesor
+Testarea API a endpoint-urilor destinate administratorului aplicației
+Activități de învățare
+Consultare la nevoie a documentațiilor oficiale și lecturarea
+opțională a resurselor recomandate pentru aprofundare (React,
+Route Guards)
+Întâlniri
+SPRINT Planning - 08.01.2026
+Weekly SCRUM - 12.01.2026
+SPRINT Review - 17.01.2026
+SPRINT 5
+Perioada de desfășurare: 18.01.2026 - 27.01.2026
+Scopul acestui SPRINT este gestiunea materialelor atașate, finisarea funcționalității de
+Gamification și ordonarea studenților în funcție de punctajul acumulat.
+Obiective specifice Atașare materiale Dezvoltarea elementelor de
+gamification prin clasamente
+US 2.5
+US 5.3
+US 3.3
+US 4.1
+USP 3.1.1.1
+Activități de dezvoltare
+Atașare resurse suplimentare
+(imagini, fișiere PDF),
+Vizualizare și descărcare
+atașamente
+Afișarea nivelului pe pagina de
+profil a fiecărui utilizator,
+Listarea studenților sub forma
+unui clasament global,
+Afișarea clasamentelor
+săptămânale,
+Îmbunătățirea experienței de
+colectare a punctajului prin
+feedback vizual imediat
+Activități de testare
+Testarea manuală a feedback-ului vizual și a poziționării
+corecte în clasamente în funcție de progres
+Testarea unitară a corectitudinii acordării punctelor XP și a
+insignelor
+Activități de învățare Reluarea materialelor referitoare la elementele de gamification
+de către toți membrii echipei, la nevoie
+Întâlniri
+SPRINT Planning - 18.01.2026
+Weekly SCRUM - 23.01.2026
+SPRINT Review - 27.01.2026
+SPRINT Retrospective – 27.01.2026
+SPRINT 6
+Perioada de desfășurare: 28.01.2026 - 06.02.2026
+Scopul acestui ultim SPRINT este constituit de prezentarea realizărilor personale ale
+studenților, generarea de rapoarte, optimizarea interogărilor și consolidarea aplicației prin
+remedierea posibilelor probleme rămase.
+Obiective specifice Vizualizare activitate
+individuală
+Optimizare interogări
+US 3.4
+US 4.2
+USP 3.1.1.2
+USP 4.1.1.1
+USP 4.1.1.2
+Activități de dezvoltare
+Evidențierea locului ocupat în
+clasamente,
+Listarea istoricului realizărilor
+(puncte, insigne, bonusuri,
+limbi studiate),
+Raport detaliat asupra
+activității personale pe
+platformă
+Paginarea rezultatelor,
+Definire index pentru
+optimizarea interogărilor
+Activități de testare
+Testarea manuală a corectitudinii afișării activității personale
+a fiecărui utilizator, precum și a paginării studenților în cadrul
+clasamentelor
+Testarea API a endpoint-urilor care furnizează lista
+studenților din clasamente și respectarea paginării la nivel de
+răspuns
+Activități de învățare
+Parcurgerea materialelor referitoare la paginarea în .NET
+pentru membrii echipei care nu au o astfel de experiență
+(Cristi, Rareș)
+Vizionarea tutorialului pentru definirea unui index pe baza de
+date de către toți membrii echipei
+Întâlniri
+SPRINT Planning - 28.01.2026
+Weekly SCRUM - 01.02.2026
+SPRINT Review - 04.02.2026
+SPRINT Retrospective - 06.02.2026

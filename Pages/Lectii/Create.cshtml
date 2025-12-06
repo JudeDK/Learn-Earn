@@ -1,0 +1,39 @@
+@page
+@model Learn_Earn.Pages.Lectii.CreateModel
+@{
+    ViewData["Title"] = "Creează lecție";
+}
+
+<h1>Creează lecție</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Titlu</label>
+        <input asp-for="Lesson.Title" class="form-control" />
+        <span asp-validation-for="Lesson.Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Limba</label>
+        <input asp-for="Lesson.Language" class="form-control" />
+        <span asp-validation-for="Lesson.Language" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Dificultate</label>
+        <input asp-for="Lesson.Difficulty" class="form-control" />
+        <span asp-validation-for="Lesson.Difficulty" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Durată (minute)</label>
+        <input asp-for="Lesson.DurationMinutes" class="form-control" />
+        <span asp-validation-for="Lesson.DurationMinutes" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Conținut</label>
+        <textarea asp-for="Lesson.Content" class="form-control"></textarea>
+    </div>
+    <button class="btn btn-primary">Creează</button>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

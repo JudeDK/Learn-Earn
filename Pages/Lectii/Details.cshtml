@@ -1,0 +1,14 @@
+@page "{id:int}"
+@model Learn_Earn.Pages.Lectii.DetailsModel
+@{
+    ViewData["Title"] = Model.Lesson.Title;
+}
+
+<h1>@Model.Lesson.Title</h1>
+<p><strong>Limba:</strong> @Model.Lesson.Language</p>
+<p><strong>Dificultate:</strong> @Model.Lesson.Difficulty</p>
+<p><strong>Durată (min):</strong> @Model.Lesson.DurationMinutes</p>
+<hr />
+<div>
+    @Html.Raw(Model.Lesson.Content)
+</div>

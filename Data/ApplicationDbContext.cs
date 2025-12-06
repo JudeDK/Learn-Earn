@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Learn_Earn.Models;
 
 namespace Learn_Earn.Data
 {
@@ -9,5 +10,7 @@ namespace Learn_Earn.Data
             : base(options)
         {
         }
+
+        public DbSet<Lesson> Lessons { get; set; }
     }
 }

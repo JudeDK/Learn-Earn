@@ -1,0 +1,38 @@
+@page "{id:int}"
+@model Learn_Earn.Pages.Lectii.EditModel
+@{
+    ViewData["Title"] = "Editeaza Lecție";
+}
+
+<h1>Editeaza Lecție</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Lesson.Id" />
+    <div class="mb-3">
+        <label asp-for="Lesson.Title" class="form-label"></label>
+        <input asp-for="Lesson.Title" class="form-control" />
+        <span asp-validation-for="Lesson.Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Lesson.Language" class="form-label"></label>
+        <input asp-for="Lesson.Language" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Lesson.Difficulty" class="form-label"></label>
+        <input asp-for="Lesson.Difficulty" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Lesson.DurationMinutes" class="form-label"></label>
+        <input asp-for="Lesson.DurationMinutes" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Lesson.Content" class="form-label"></label>
+        <textarea asp-for="Lesson.Content" class="form-control"></textarea>
+    </div>
+    <button class="btn btn-primary">Salveaza</button>
+    <a asp-page="/Profesori/MyLectii" class="btn btn-secondary ms-2">Anuleaza</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

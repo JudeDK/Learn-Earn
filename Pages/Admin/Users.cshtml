@@ -1,0 +1,38 @@
+@page
+@model Learn_Earn.Pages.Admin.UsersModel
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<h1>Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var u in Model.Users)
+    {
+        <tr>
+            <td>@u.Email</td>
+            <td>@u.Roles</td>
+            <td>
+                <form method="post" asp-page-handler="SetRole" class="d-inline">
+                    <input type="hidden" name="id" value="@u.Id" />
+                    <input type="hidden" name="role" value="Profesor" />
+                    <button class="btn btn-sm btn-outline-primary">Make Profesor</button>
+                </form>
+                <form method="post" asp-page-handler="SetRole" class="d-inline ms-2">
+                    <input type="hidden" name="id" value="@u.Id" />
+                    <input type="hidden" name="role" value="" />
+                    <button class="btn btn-sm btn-outline-secondary">Make User</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

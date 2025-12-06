@@ -1,0 +1,228 @@
+@page
+@model Learn_Earn.Pages.Lectii.IndexModel
+@{
+    ViewData["Title"] = "Lecții";
+}
+
+<h1>Lecții</h1>
+
+<form method="get" class="mb-3" id="filtersForm">
+    <div class="row g-2">
+        <div class="col-md-4">
+            <input class="form-control" name="Search" placeholder="Caută..." value="@Model.Search" />
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" name="Language" placeholder="Limba" value="@Model.Language" id="languageInput" readonly />
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" name="Difficulty" placeholder="Dificultate" value="@Model.Difficulty" id="difficultyInput" readonly />
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" name="Professor" placeholder="Profesor" value="@Model.Professor" id="professorInput" readonly />
+        </div>
+        <div class="col-md-2">
+            <!-- Sort removed as requested -->
+        </div>
+        <div class="col-md-2 d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" id="resetFilters">Resetează</button>
+        </div>
+    </div>
+    <input type="hidden" name="PageNumber" id="PageNumberHidden" value="@Model.PageNumber" />
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Titlu</th>
+            <th>Profesor</th>
+            <th>Limbă</th>
+            <th>Dificultate</th>
+            <th>Durată (min)</th>
+            <th>Detalii</th>
+            @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+            {
+                <th>Acțiuni Admin</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var lec in Model.Lessons)
+    {
+        <tr>
+            <td>@lec.Title</td>
+            <td>@lec.CreatedByEmail</td>
+            <td>@lec.Language</td>
+            <td>@lec.Difficulty</td>
+            <td>@lec.DurationMinutes</td>
+            <td>
+                <a class="btn btn-sm btn-outline-primary" href="/Lectii/Details/@lec.Id">Vezi</a>
+            </td>
+            @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+            {
+                <td>
+                    <a class="btn btn-sm btn-outline-danger" asp-page="/Lectii/Delete" asp-route-id="@lec.Id">Sterge</a>
+                </td>
+            }
+        </tr>
+    }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @(Model.PageNumber <= 1 ? "disabled" : "")">
+            <a class="page-link" asp-page="./Index" asp-route-pageNumber="@(Model.PageNumber-1)" asp-route-search="@Model.Search" asp-route-language="@Model.Language" asp-route-difficulty="@Model.Difficulty">Prev</a>
+        </li>
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link" asp-page="./Index" asp-route-pageNumber="@i" asp-route-search="@Model.Search" asp-route-language="@Model.Language" asp-route-difficulty="@Model.Difficulty">@i</a>
+            </li>
+        }
+        <li class="page-item @(Model.PageNumber >= Model.TotalPages ? "disabled" : "")">
+            <a class="page-link" asp-page="./Index" asp-route-pageNumber="@(Model.PageNumber+1)" asp-route-search="@Model.Search" asp-route-language="@Model.Language" asp-route-difficulty="@Model.Difficulty">Next</a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Language Modal -->
+<div class="modal fade" id="languageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Alege Limba</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="list-group">
+          @foreach (var lang in Model.Languages)
+          {
+              <button type="button" class="list-group-item list-group-item-action language-choice">@lang</button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Difficulty Modal -->
+<div class="modal fade" id="difficultyModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Alege Dificultatea</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="list-group">
+          @foreach (var d in Model.Difficulties)
+          {
+              <button type="button" class="list-group-item list-group-item-action difficulty-choice">@d</button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Professor Modal -->
+<div class="modal fade" id="professorModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Alege Profesor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group">
+                    @foreach (var p in Model.Professors)
+                    {
+                            <button type="button" class="list-group-item list-group-item-action professor-choice">@p</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // debounce helper
+        function debounce(fn, wait) {
+            let t;
+            return function(...args) {
+                clearTimeout(t);
+                t = setTimeout(() => fn.apply(this, args), wait);
+            }
+        }
+
+        (function() {
+            const searchInput = document.querySelector('input[name="Search"]');
+            const form = document.getElementById('filtersForm');
+            const pageHidden = document.getElementById('PageNumberHidden');
+            const languageInput = document.getElementById('languageInput');
+            const difficultyInput = document.getElementById('difficultyInput');
+            const professorInput = document.getElementById('professorInput');
+
+            if (searchInput) {
+                searchInput.addEventListener('keyup', debounce(function() {
+                    if (pageHidden) pageHidden.value = '1';
+                    form.submit();
+                }, 300));
+            }
+
+            // reset button clears filters and submits
+            const resetBtn = document.getElementById('resetFilters');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    if (searchInput) searchInput.value = '';
+                    if (languageInput) languageInput.value = '';
+                    if (difficultyInput) difficultyInput.value = '';
+                    if (pageHidden) pageHidden.value = '1';
+                    form.submit();
+                });
+            }
+
+            if (languageInput) {
+                languageInput.addEventListener('click', function() {
+                    var modal = new bootstrap.Modal(document.getElementById('languageModal'));
+                    modal.show();
+                });
+            }
+            if (difficultyInput) {
+                difficultyInput.addEventListener('click', function() {
+                    var modal = new bootstrap.Modal(document.getElementById('difficultyModal'));
+                    modal.show();
+                });
+            }
+            if (professorInput) {
+                professorInput.addEventListener('click', function() {
+                    var modal = new bootstrap.Modal(document.getElementById('professorModal'));
+                    modal.show();
+                });
+            }
+
+            document.querySelectorAll('.language-choice').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    languageInput.value = this.textContent.trim();
+                    if (pageHidden) pageHidden.value = '1';
+                    form.submit();
+                });
+            });
+            document.querySelectorAll('.difficulty-choice').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    difficultyInput.value = this.textContent.trim();
+                    if (pageHidden) pageHidden.value = '1';
+                    form.submit();
+                });
+            });
+            document.querySelectorAll('.professor-choice').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    professorInput.value = this.textContent.trim();
+                    if (pageHidden) pageHidden.value = '1';
+                    form.submit();
+                });
+            });
+        })();
+    </script>
+}

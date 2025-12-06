@@ -1,0 +1,26 @@
+@page "{id:int}"
+@model Learn_Earn.Pages.Lectii.DeleteModel
+@{
+    ViewData["Title"] = "Sterge Lecție";
+}
+
+<h1>Sterge Lecție</h1>
+
+<div class="alert alert-danger">Ești sigur că vrei să ștergi această lecție?</div>
+
+<dl class="row">
+    <dt class="col-sm-2">Titlu</dt>
+    <dd class="col-sm-10">@Model.Lesson?.Title</dd>
+
+    <dt class="col-sm-2">Limbă</dt>
+    <dd class="col-sm-10">@Model.Lesson?.Language</dd>
+
+    <dt class="col-sm-2">Dificultate</dt>
+    <dd class="col-sm-10">@Model.Lesson?.Difficulty</dd>
+</dl>
+
+<form method="post">
+    <button class="btn btn-danger">Sterge</button>
+    <a asp-page="/Profesori/MyLectii" class="btn btn-secondary ms-2">Anuleaza</a>
+    <input type="hidden" name="id" value="@Model.Lesson?.Id" />
+</form>

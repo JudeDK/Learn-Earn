@@ -68,6 +68,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/User/source/repos/Learn&Earn/Pages/Admin/Users.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cVXNlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/User/source/repos/Learn&Earn/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -76,8 +80,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/User/source/repos/Learn&Earn/Pages/Lectii/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVjdGlpXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Learn&Earn/Pages/Lectii/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVjdGlpXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Learn&Earn/Pages/Lectii/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVjdGlpXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Learn&Earn/Pages/Lectii/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVjdGlpXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Learn&Earn/Pages/Lectii/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVjdGlpXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/User/source/repos/Learn&Earn/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Learn&Earn/Pages/Profesori/MyLectii.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmVzb3JpXE15TGVjdGlpLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/source/repos/Learn&Earn/Pages/Shared/_LoginPartial.cshtml]
