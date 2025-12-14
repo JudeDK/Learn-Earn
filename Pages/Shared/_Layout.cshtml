@@ -28,6 +28,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Lectii/Index">Lecții</a>
                         </li>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Student/MyProgress">Progresul meu</a>
+                            </li>
+                        }
                         @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -41,6 +47,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Profesori/MyLectii">Lectiile mele</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Profesori/Notifications">Notificări</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Profesori/ToGrade">De notat</a>
+                            </li>
                         }
                     </ul>
 
@@ -50,13 +62,7 @@
             </div>
         </nav>
     </header>
-    @* Professor notifications panel rendered below header for professors *@
-    @if (User.Identity?.IsAuthenticated == true && (User.IsInRole("Profesor") || User.IsInRole("Admin")))
-    {
-        <div class="container">
-            <partial name="_ProfessorNotifications" />
-        </div>
-    }
+    @* Notifications are available on the dedicated Profesori/Notifications page only *@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

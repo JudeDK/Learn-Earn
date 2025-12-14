@@ -8,6 +8,14 @@
 <p><strong>Limba:</strong> @Model.Lesson.Language</p>
 <p><strong>Dificultate:</strong> @Model.Lesson.Difficulty</p>
 <p><strong>Durată (min):</strong> @Model.Lesson.DurationMinutes</p>
+@if (TempData["QuizSubmittedMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["QuizSubmittedMessage"]</div>
+}
+@if (ViewData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
+}
 <hr />
 <div>
     @Html.Raw(Model.Lesson.Content)
@@ -15,6 +23,34 @@
 
 <hr />
 <div>
+    @if (Model.QuizForLesson != null)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Există un quiz pentru această lecție</h5>
+                <p class="card-text">Titlu: @Model.QuizForLesson.Title</p>
+                    @* Show student's validated grade if present *@
+                    @if (Model.UserAttempt != null)
+                    {
+                        <div class="alert alert-secondary">
+                            <strong>Nota ta:</strong> @Model.UserAttempt.Score / @Model.UserAttempt.Total
+                            @if (!string.IsNullOrEmpty(Model.UserAttempt.ValidationNote))
+                            {
+                                <div><em>@Model.UserAttempt.ValidationNote</em></div>
+                            }
+                        </div>
+                    }
+                @if (User.IsInRole("Profesor") || User.IsInRole("Admin") || (Model.Progress != null && Model.Progress.CompletedSections > 0))
+                {
+                    <a class="btn btn-primary" asp-page="/Quizzes/Take" asp-route-id="@Model.QuizForLesson.Id">Dă quiz</a>
+                }
+                else
+                {
+                    <button class="btn btn-secondary" disabled>Completează lecția pentru a debloca quiz-ul</button>
+                }
+            </div>
+        </div>
+    }
     <h4>Progress</h4>
     @if (Model.Progress != null && Model.Progress.CompletedSections > 0)
     {
@@ -45,5 +81,50 @@
                 Descarcă: @Model.Lesson.AttachmentFileName
             </a>
         </p>
+    </div>
+}
+
+@* Professor inline review panel when opened with a notificationId *@
+@if (Model.NotificationForProfessor != null)
+{
+    <hr />
+    <div class="card mb-3">
+        <div class="card-header">Revizuire student: @(Model.StudentForReview?.UserName ?? Model.NotificationForProfessor.StudentUserId)</div>
+        <div class="card-body">
+            @if (Model.QuizForLesson == null)
+            {
+                <div class="alert alert-info">Nu există quiz pentru această lecție.</div>
+                <div class="mb-2">
+                    <a class="btn btn-secondary" asp-page="/Quizzes/Create" asp-route-lessonId="@Model.Lesson.Id" asp-route-notificationId="@Model.NotificationForProfessor.Id" asp-route-returnUrl="@Url.Page("/Lectii/Details", new { id = Model.Lesson.Id, notificationId = Model.NotificationForProfessor.Id })">Creează quiz pentru această lecție</a>
+                </div>
+                <form method="post" asp-page-handler="ValidateAttempt">
+                    <input type="hidden" name="ValidationInput.NotificationId" value="@Model.NotificationForProfessor.Id" />
+                    <button type="submit" class="btn btn-primary">Marchează tratată</button>
+                </form>
+            }
+            else
+            {
+                <form method="post" asp-page-handler="ValidateAttempt">
+                    <input type="hidden" name="ValidationInput.NotificationId" value="@Model.NotificationForProfessor.Id" />
+                    <div class="mb-2">
+                        <label class="form-label">Scor obținut</label>
+                        <input class="form-control" type="number" name="ValidationInput.Score" value="0" />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Total puncte</label>
+                        <input class="form-control" type="number" name="ValidationInput.Total" value="@Model.QuizQuestions.Count" />
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" name="ValidationInput.Passed" id="passedCheck" />
+                        <label class="form-check-label" for="passedCheck">Studentul a trecut quiz-ul</label>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Notă / comentariu</label>
+                        <textarea class="form-control" name="ValidationInput.Note"></textarea>
+                    </div>
+                    <button class="btn btn-success" type="submit">Validează și acordă</button>
+                </form>
+            }
+        </div>
     </div>
 }

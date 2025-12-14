@@ -3,18 +3,38 @@
 
 <h2>Create Quiz</h2>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @if (ViewData["ExceptionDetails"] != null)
+    {
+        <div class="alert alert-danger mt-2">
+            <strong>Detalii eroare (dev):</strong>
+            <pre style="white-space:pre-wrap;word-break:break-word">@ViewData["ExceptionDetails"]</pre>
+        </div>
+    }
+
     <div>
         <label>Title</label>
-        <input asp-for="Quiz.Title" />
+        <input asp-for="Quiz.Title" class="form-control" />
+        <span asp-validation-for="Quiz.Title" class="text-danger"></span>
     </div>
     <div>
         <label>Lesson Id (optional)</label>
-        <input asp-for="Quiz.LessonId" />
+        <input asp-for="Quiz.LessonId" class="form-control" />
+        <span asp-validation-for="Quiz.LessonId" class="text-danger"></span>
     </div>
     <div>
         <label>Duration (minutes)</label>
-        <input asp-for="Quiz.DurationMinutes" />
+        <input asp-for="Quiz.DurationMinutes" class="form-control" />
+        <span asp-validation-for="Quiz.DurationMinutes" class="text-danger"></span>
     </div>
-    <button type="submit">Create</button>
+    <div class="mb-2">
+        <label class="form-label">Încarcă fișier quiz (opțional)</label>
+        <input asp-for="Attachment" type="file" class="form-control" />
+        <span asp-validation-for="Attachment" class="text-danger"></span>
+    </div>
+    <input type="hidden" asp-for="NotificationId" />
+    <input type="hidden" asp-for="ReturnUrl" />
+    <button type="submit" class="btn btn-primary">Create</button>
 </form>

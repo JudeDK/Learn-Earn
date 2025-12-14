@@ -6,7 +6,7 @@
 @{
     var userId = UserManager.GetUserId(User);
     if (string.IsNullOrEmpty(userId)) { <text></text>; return; }
-    var notes = Db.ProfessorNotifications.Where(n => n.ProfessorUserId == userId && !n.IsHandled).OrderByDescending(n => n.CreatedAt).Take(10).ToList();
+    var notes = Db.ProfessorNotifications.Where(n => (n.ProfessorUserId == null || n.ProfessorUserId == userId) && !n.IsHandled).OrderByDescending(n => n.CreatedAt).Take(10).ToList();
 }
 
 @if (notes.Any())
@@ -23,7 +23,7 @@
                         <small class="text-muted">@n.CreatedAt.ToString("g")</small>
                     </div>
                     <div>
-                        <a class="btn btn-sm btn-primary" asp-page="/Profesori/ReviewAttempt" asp-route-id="@n.Id">Dă quiz</a>
+                        <a class="btn btn-sm btn-primary" asp-page="/Lectii/Details" asp-route-id="@n.LessonId" asp-route-notificationId="@n.Id">Dă quiz</a>
                     </div>
                 </div>
             }

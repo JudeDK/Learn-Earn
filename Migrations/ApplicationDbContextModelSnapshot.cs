@@ -161,6 +161,15 @@ namespace Learn_Earn.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AttachmentContentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AttachmentFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AttachmentPath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -205,6 +214,15 @@ namespace Learn_Earn.Migrations
 
                     b.Property<int>("Score")
                         .HasColumnType("int");
+
+                    b.Property<string>("StudentSubmissionContentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentSubmissionFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentSubmissionPath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Total")
                         .HasColumnType("int");
@@ -268,6 +286,26 @@ namespace Learn_Earn.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserDailyCompletions");
+                });
+
+            modelBuilder.Entity("Learn_Earn.Models.UserQuizDailyCompletion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserQuizDailyCompletions");
                 });
 
             modelBuilder.Entity("Learn_Earn.Models.UserXp", b =>

@@ -20,5 +20,6 @@ namespace Learn_Earn.Data
         public DbSet<Learn_Earn.Models.UserXp> UserXps { get; set; }
         public DbSet<Learn_Earn.Models.Badge> Badges { get; set; }
         public DbSet<Learn_Earn.Models.UserDailyCompletion> UserDailyCompletions { get; set; }
+        public DbSet<Learn_Earn.Models.UserQuizDailyCompletion> UserQuizDailyCompletions { get; set; }
     }
 }

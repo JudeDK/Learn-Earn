@@ -24,5 +24,9 @@ namespace Learn_Earn.Models
         public string? ValidatedByUserId { get; set; }
         public bool? Passed { get; set; }
         public string? ValidationNote { get; set; }
+        // Student file submission (for file-based quizzes)
+        public string? StudentSubmissionFileName { get; set; }
+        public string? StudentSubmissionPath { get; set; }
+        public string? StudentSubmissionContentType { get; set; }
     }
 }

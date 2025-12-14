@@ -20,5 +20,10 @@ namespace Learn_Earn.Models
         public string? CreatedByUserId { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        // Optional attachment (file-based quiz)
+        public string? AttachmentFileName { get; set; }
+        public string? AttachmentPath { get; set; }
+        public string? AttachmentContentType { get; set; }
     }
 }
