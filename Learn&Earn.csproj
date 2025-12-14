@@ -5,6 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Learn_Earn</RootNamespace>
+        <!-- Disable Static Web Assets discovery to avoid duplicate asset conflicts
+          when multiple copies of the project content exist on the machine. -->
+        <DisableStaticWebAssets>true</DisableStaticWebAssets>
+        <!-- Explicitly turn off static web assets processing which can discover
+          other copies of the project's wwwroot on the machine. -->
+        <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
   </PropertyGroup>
 
   <ItemGroup>

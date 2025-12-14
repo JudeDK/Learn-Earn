@@ -1,0 +1,52 @@
+@page
+@model Learn_Earn.Pages.Profesori.ReviewAttemptModel
+
+<h2>Revizuire quiz student</h2>
+
+@if (Model.Notification == null)
+{
+    <div class="alert alert-warning">Notificare invalidă.</div>
+}
+else
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Student: @(Model.Student?.UserName ?? Model.Notification.StudentUserId)</h5>
+            <p class="card-text">Lecție: @(Model.Lesson?.Title ?? ("ID " + Model.Notification.LessonId))</p>
+
+            @if (Model.Quiz == null)
+            {
+                <div class="alert alert-info">Nu există niciun quiz asociat acestei lecții. Poți marca notificarea ca tratată.</div>
+                <form method="post">
+                    <input type="hidden" name="Input.NotificationId" value="@Model.Notification.Id" />
+                    <button type="submit" class="btn btn-primary">Marchează tratată</button>
+                </form>
+            }
+            else
+            {
+                <form method="post">
+                    <input type="hidden" name="Input.NotificationId" value="@Model.Notification.Id" />
+                    <div class="mb-2">
+                        <label class="form-label">Scor obținut</label>
+                        <input class="form-control" type="number" name="Input.Score" value="0" />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Total puncte</label>
+                        <input class="form-control" type="number" name="Input.Total" value="@Model.QuizQuestionCount" />
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" name="Input.Passed" id="passedCheck" />
+                        <label class="form-check-label" for="passedCheck">Studentul a trecut quiz-ul</label>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Notă / comentariu</label>
+                        <textarea class="form-control" name="Input.Note"></textarea>
+                    </div>
+                    <button class="btn btn-success" type="submit">Validează și acordă</button>
+                </form>
+            }
+        </div>
+    </div>
+}
+
+

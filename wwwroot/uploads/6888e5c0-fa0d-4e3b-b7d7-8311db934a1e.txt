@@ -1,0 +1,165 @@
+A. Diferențele între ASP.NET Core Razor Pages și ASP.NET Core MVC
+Razor Pages pornește de la ideea “page-centric” și grupează modelul de candidă logică de prezentare direct lângă fișierul .cshtml. Fiecare pagină are un PageModel ce combină „controller-ul” doar pentru acea pagină, făcând codul CRUD ușor de urmărit. MVC cere o separare strictă Model-View-Controller, utile când ai multe entități reutilizate și rute complexe. MVC oferă filtre globale și o structură predictibilă pentru aplicații enterprise, în timp ce Razor Pages reduce birocrația pentru scenarii simple, scade numărul de fișiere și favorizează “convenții peste configurație” la nivel de routing (folder = segment URL).
+
+B. Modul de funcționare al protocolului HTTP
+HTTP este un protocol de aplicație stateless, construit pe TCP/IP, care definește mesajele request și response. Un client inițiază conexiunea, trimite o linie de start (metoda: GET, POST etc.), antete și, uneori, corp. Serverul răspunde cu un cod de stare (200, 404, 500…), antete și eventual corp (HTML, JSON, fișier binar). Fiecare cerere este independentă, starea fiind menținută prin cookie-uri, tokenuri ori header-e personalizate. De la HTTP/1.1 la HTTP/2 și HTTP/3 au apărut multiplexarea, comprimarea antetelor și transportul QUIC pentru latență redusă.
+
+C. Conectarea la baza de date în ASP.NET Core cu Entity Framework Core
+Se definește un DbContext care mapează entitățile la tabele. În Program.cs (sau Startup.cs la versiuni mai vechi) se apelează builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString)) ori alt provider (PostgreSQL, SQLite). Stringul de conexiune stă în appsettings.json și poate fi suprascris prin variabile de mediu. DI injectează contextul în servicii sau controllere, iar EF Core gestionează pool-ul de conexiuni, transacțiile și migrațiile. Astfel codul C# se traduce automat în SQL, iar modificările entităților se propagă la SaveChanges().
+
+D. Diferența dintre tipuri valoare și tipuri referință în C#
+Tipurile valoare (struct, enum, primitive) sunt alocate în stivă (sau inline în heap בתוך obiecte) și conțin direct datele; la transmiterea ca argument se copiază întreaga valoare. Tipurile referință (class, array, delegate, string) sunt alocate pe heap, iar variabila ține un pointer; copiile variabilei partajează același obiect. Colectorul de gunoi GC gestionează durata de viață a obiectelor referință. În plus, valoarea null este validă doar pentru tipuri referință (cu excepția tipurilor valoare anulabile: int?). Înțelegerea diferenței influențează performanța, mutabilitatea și design-ul API-urilor.
+
+E. Cum funcționează Entity Framework Core
+EF Core este un ORM modern, cross-platform, ce realizează maparea obiect-relațională prin model metadata. La rulare, tipurile entităților se reflectă în tabele, coloane și relații. Interogările LINQ sunt analizate de query provider și convertite în SQL optimizat pentru providerul ales. Contextul urmărește starea entităților (Added, Modified, Deleted), generează comenzi SQL pe SaveChanges, iar migrările (dotnet ef migrations add) descriu evoluția schemei. EF Core suportă lazy/eager loading, interceptori, caching de nivel 1 și poate funcționa cu change tracking proxies pentru detectarea automată a modificărilor.
+Răspunsurile la cele 50 de întrebări suplimentare
+
+1. Rolul middleware-urilor și configurarea pipeline-ului
+În ASP.NET Core pipeline-ul este un lanț de delegate RequestDelegate care procesează fiecare cerere. Middleware-urile pot scurta lanțul (răspunzând direct) sau pot prelucra cererea/răspunsul înainte de a continua. Se adaugă prin extensii UseXyz în IApplicationBuilder. Ordinea contează: autentificarea trebuie înaintea autorizării, iar compresia după generarea corpului. Middleware-urile pot folosi DI, pot fi condiționale (MapWhen) și pot fi scrise ca clase proprii, facilitând cross-cutting concerns precum logging, caching, CORS sau ratelimiting.
+
+2. Dependency Injection și durate de viață
+DI este integrat nativ; serviciile se înregistrează în IServiceCollection. Singleton creează o instanță pentru întreaga aplicație (partajată de toate thread-urile), potrivită pentru servicii fără stare. Scoped creează o instanță per cerere HTTP, ideal pentru DbContext, deoarece menține un singur unit of work pe request. Transient produce o instanță nouă la fiecare rezoluție, utilă pentru obiecte stateless de scurtă durată. DI reduce cuplarea, facilitează testarea și permite injectarea configurațiilor și logger-ului prin constructor.
+
+3. Routing în MVC și avantajele Endpoint Routing
+Routing-ul stabilește cum un URL se map-ează la un controller/action. Endpoint Routing (din ASP.NET Core 3.0) separă faza de construire a tabelului de rute de faza de execuție, permițând interogarea endpoint-urilor înainte de execuție (pentru linking, metadata, CORS, auth). Declararea endpoints.MapControllerRoute în UseEndpoints face rutele mai clare. Comparativ, routing-ul „clasic” procesa rutele în interiorul MVC, ceea ce îngreuna interacțiunea altor middleware-uri cu metadatele rutei.
+
+4. Tag Helpers în Razor
+Tag Helpers permit folosirea unei sintaxe HTML-like îmbogățite cu atribute C#. În loc de @Html.TextBoxFor(...), scrii <input asp-for="Email" />. La compilare, motorul Razor înlocuiește tag-ul cu markup standard, menținând IntelliSense și validare HTML. Ele ascund cod server–side complicat, cresc lizibilitatea și unifică fluxul de lucru front-end/back-end. Se pot crea Tag Helpers personalizate derivând din TagHelper, putând injecta servicii din DI.
+
+5. Autentificare și autorizare cu ASP.NET Core Identity
+Identity furnizează baze de date, UI Razor, tokenuri și API-uri pentru gestionarea utilizatorilor. Înregistrarea AddIdentity adaugă serviciile, iar mediatorul cookie-based gestionează sesiunile. Politicile de autorizare se declară prin AddAuthorization; [Authorize(Roles="Admin")] restricționează accesul. Identity oferă hashing cu PasswordHasher, resetare parole, confirmare email și suport 2FA. Poți schimba store-ul de date (SQL Server, PostgreSQL) sau integra IdentityServer pentru scenarii OpenID Connect.
+
+6. Cookie-based vs JWT Bearer Authentication
+Cookie-based stochează un ticket criptat pe client; serverul îl transmite în fiecare request și îl validează. Funcționează excelent cu browsere, protejează împotriva XSS și CSRF prin opțiunile SameSite, însă este legat de domeniu. JWT Bearer plasează un token auto-descriptiv în headerul Authorization. E stateless, potrivit pentru API-uri mobile și microservicii. Dezavantaj: nu poate fi revocat ușor și crește dimensiunea cererii. Cookie-urile pot fi reîmprospătate prin SlidingExpiration, JWT-ul necesită refresh tokens.
+
+7. Gestionarea configurațiilor (appsettings, variabile, Secret Manager)
+ASP.NET Core construiește un arbore de configurații pornind de la appsettings.json, apoi appsettings.{Environment}.json, variabile de mediu, argumente CLI și Key Vault/Secrets. Serviciul IConfiguration expune valorile prin indexatori ori binding în POCO-uri cu services.Configure<MyOptions>(Configuration.GetSection("MySection")). Secret Manager păstrează chei sensibile local, neincluse în controlul versiunilor. Precedența surselor permite suprascrierea valorilor în cloud fără recompilare.
+
+8. Caching (In Memory, Distributed, Response)
+IMemoryCache menține datele în proces, ideal pentru instanțe unice. IDistributedCache (Redis, SQL) partajează date între noduri în scenarii scalate. Decoratorul [ResponseCache(Duration=60)] sau middleware-ul ResponseCaching stochează răspunsurile HTTP gata formate. Cheile cache pot include variații după header, query-string sau cookie. Caching-ul reduce apelurile la DB, dar necesită politici de expirație și invalidare (Absolute, Sliding, CancelationToken, ETag) pentru coerență.
+
+9. Publicarea într-un container Docker
+Se scrie un Dockerfile pornind din mcr.microsoft.com/dotnet/aspnet pentru runtime și mcr.microsoft.com/dotnet/sdk pentru build stage (pattern multi-stage). Comanda dotnet publish -c Release produce binarele optimizate. Image-ul se construiește cu docker build -t app:v1 . și se rulează cu docker run -p 8080:80 app:v1. Containerizarea izolează dependențele, simplifică CI/CD și permite scalarea orchestration (Kubernetes, Azure Container Apps).
+
+10. Filters în MVC
+Filters interceptează execuția înainte/după controllere: Authorization, Resource, Action, Exception, Result. Ele pot implementa IAsyncActionFilter sau deriva din ActionFilterAttribute. Scenarii: validare globală, logare execepții, rularea tranzacțiilor DB. Se înregistrează global (AddControllersWithViews(options => options.Filters.Add<LogFilter>())), la controller sau la acțiune. Filters reduc codul duplicat și separă cross-cutting concerns.
+
+11. Model binding și validare
+Model binding map-ează parametrii request-ului (route, query, form, body, header) la obiecte .NET. Atributele [FromQuery], [FromBody] clarifică sursa. System.ComponentModel.DataAnnotations ([Required], [Range], [EmailAddress]) definește reguli de validare; ModelState.IsValid confirmă rezultatul. Se pot implementa validatori personalizați sau folosi Fluent Validation. Mesajele de eroare ajung la client prin obiectul ValidationProblemDetails (RFC 7807).
+
+12. Minimal APIs
+Introduse în .NET 6, Minimal APIs permit definirea de endpoint-uri direct în Program.cs cu app.MapGet("/todos", async (TodoDb db) => await db.Todos.ToListAsync()). Sunt ideale pentru microservicii simple și funcții serverless: mai puține fișiere, overhead redus, pornire rapidă. Când logica devine complexă (filtre, view-uri), MVC rămâne opțiunea robustă. Minimal APIs pot coexistă cu MVC.
+
+13. SignalR
+Microsoft.AspNetCore.SignalR asigură un model publish/subscribe bi-direcțional peste WebSockets, Server-Sent Events sau Long Polling. Serverul definește un Hub cu metode ce pot fi invocate de clienți. În Program.cs: services.AddSignalR(); app.MapHub<ChatHub>("/chat");. Clienții JavaScript folosesc @microsoft/signalr. SignalR gestionează grupuri, reconectarea și scalarea cu Redis backplane ori Azure SignalR Service.
+
+14. Rolul clasei Startup / Program
+Program creează WebApplicationBuilder, configurează DI (builder.Services) și pipeline-ul (app.UseXyz). În vechiul model, Startup separa ConfigureServices și Configure. Noua abordare minimală reduce boilerplate, dar principiul rămâne: servicii întâi, apoi middleware-uri.
+
+15. Logging avansat cu Serilog
+Serilog se integrează prin UseSerilog(). Configurația în appsettings.json definește sinks (Console, File, Seq, ElasticSearch) și niveluri. Enrichers adaugă context (requestId, machineName). Serilog oferă structured logging: Log.Information("User {@User} purchased {@Product}", user, product), facilitând interogări eficiente.
+
+16. IHostedService, BackgroundService, Worker Service
+IHostedService expune StartAsync/StopAsync. BackgroundService este template abstract care rulează ExecuteAsync(CancellationToken) într-un task pe fundal. Worker Service este un tip special de proiect, ideal pentru servicii Windows/Linux fără endpoint web. Acestea se înregistrează cu AddHostedService<T>() și beneficiază de DI, logging și configurație.
+
+17. Versionarea Web API
+Pachetul Microsoft.AspNetCore.Mvc.Versioning permite atribute [ApiVersion("1.0")]. Versionarea poate fi inclusă în URL (/v1/products), header (api-version: 1.0) sau media-type (application/vnd.myapp.v1+json). Politicile de deprioritizare și DefaultVersion gestionază fallback-ul. Este esențială pentru evoluția API-urilor fără breaking changes.
+
+18. Securizare împotriva CSRF, XSS, Clickjacking
+CSRF: ValidateAntiForgeryToken și cookie-uri SameSite=Lax sau Strict. XSS: encoder HTML implicit și CSP (Content-Security-Policy) ce blochează script-uri neautorizate. Clickjacking: header X-Frame-Options: DENY sau frame-ancestors 'none'. Middleware-ul UseHttpsRedirection și UseHsts adaugă nivel suplimentar.
+
+19. Politica CORS
+services.AddCors(options => options.AddPolicy("AllowSpa", builder => builder.WithOrigins("https://frontend.local").AllowAnyHeader().AllowAnyMethod().AllowCredentials())); și app.UseCors("AllowSpa"). CORS este vital când frontend-ul rulează pe alt domeniu decât API-ul, evitând erori preflight și protejând resursele împotriva accesului neautorizat.
+
+20. Data Protection
+Sistemul criptează cookie-uri și tokenuri. Cheile sunt rotite automat și pot fi persistate în folder, Redis, Azure Blob. API-ul IDataProtector permite criptare/decriptare personalizată (var protector = provider.CreateProtector("purpose");). Util pentru link-uri temporare forgot-password sau protejarea datelor sensibile din URL.
+
+21. EF Core + Migrări
+dotnet ef migrations add InitialCreate generează fișiere C# ce descriu schimbările. dotnet ef database update aplică scriptul. În runtime, context.Database.Migrate() poate auto-aplica migrări la pornirea aplicației. Practica DevOps cere migrări versionate în controlul sursei pentru reproductibilitate.
+
+22. DbContext Pooling
+AddDbContextPool<TContext>() ține un pool de instanțe reutilizabile, reducând costul DI și de tracking EF. Atenție la starea reziduală: nu păstra entități sau loggeri specifici per request. Pooling-ul aduce câștig de performanță în scenarii cu trafic ridicat.
+
+23. Lazy, Eager, Explicit Loading
+Eager: Include() aduce graficul complet într-o singură interogare, bun când vei accesa relațiile imediat, dar poate încărca prea multe date. Lazy: proxies navighează relațiile la prima accesare, comod dar poate genera N+1. Explicit: context.Entry(order).Collection(p => p.Items).Load() oferă control manual. Alegerea corectă evită trafic excesiv și optimizează latența.
+
+24. UseStaticFiles și cache
+Middleware-ul oferă fișiere din wwwroot. Opțiunea StaticFileOptions setează antet Cache-Control (ex. 365 zile) pentru imagini, css, js. Versionarea hash în numele fișierelor asigură invalidarea la schimbare.
+
+25. Pagini de eroare și gestionare excepții globale
+UseExceptionHandler("/Error") capturează excepțiile neprinse și redirecționează către o pagină Razor. În development, UseDeveloperExceptionPage afișează stack-trace. Poți personaliza răspunsurile JSON prin middleware. Logarea globală se face în ExceptionHandler sau cu filters MVC (IExceptionFilter).
+
+26. Blazor Server vs Blazor WebAssembly
+Blazor Server execută .NET pe server și comunică prin SignalR; startup rapid, fișiere mici, SEO friendly, dar depinde de conexiune persistentă. Blazor Wasm rulează .NET în browser via WebAssembly; offline-ready și scalare redusă server-side, dar download inițial mare și limitări sandbox.
+
+27. Flux OAuth 2.0 / OIDC cu IdentityServer
+IdentityServer emite tokenuri JWT/OIDC. Se configurează clienți, scopes, redirect URIs. ASP.NET Core consumă tokenul cu AddJwtBearer. Flow-ul implicit: Authorization Code + PKCE pentru aplicații publice SPA. Integrarea asigură SSO și federare cu furnizori externi (Google, Azure AD).
+
+28. Teste unitare și de integrare cu xUnit și TestServer
+WebApplicationFactory<Program> creează un host in-memory; poți surprinde HTTP response-urile fără port real. Injecția de servicii mock (builder.ConfigureTestServices) izolează DB-ul. Testele unitare folosesc moq pentru serviciile interne, iar asserts validează coduri de stare, antete și model-binding.
+
+29. Health Checks
+services.AddHealthChecks().AddSqlServer(connectionString).AddRedis(...); app.MapHealthChecks("/health"). Sondajul poate raporta Healthy, Degraded, Unhealthy și expune JSON pentru Prometheus, Kubernetes sau Azure Monitor. Poți scrie check-uri custom (ex. dependențe externe).
+
+30. Hosting pe IIS, Kestrel, Azure
+IIS rulează ca reverse-proxy către Kestrel; oferă gestionare app-pool și Windows Auth. Kestrel standalone e cross-platform și performant, necesită Nginx/Apache pentru TLS/HTTP2 în Linux. Azure App Service abstractizează infrastructura, oferind autoscaling, logging și deployment slot-uri, dar costă mai mult decât VM-urile brute.
+
+31. Localizare într-o aplicație Razor Pages
+Se adaugă services.AddLocalization() și AddRazorPages().AddViewLocalization(). Resursele .resx sunt plasate în Resources. Middleware-ul UseRequestLocalization detectează cultura din URL, cookie sau headerul Accept-Language. Tag Helper-ul IViewLocalizer traduce textul.
+
+32. UseForwardedHeaders și reverse proxy
+Când rulezi după Nginx/Traefik, antetele X-Forwarded-For și X-Forwarded-Proto indică IP-ul real și schema TLS. Middleware-ul trebuie pus la început, pentru a asigura redirecționarea HTTPS și loguri corecte.
+
+33. Compresie răspuns HTTP
+app.UseResponseCompression() cu services.AddResponseCompression(options => { options.EnableForHttps = true; }). Suport pentru gzip, brotli, deflate. Clientul trimite Accept-Encoding, serverul răspunde cu Content-Encoding. Compresia scade traficul, dar consumă CPU; exclude fișierele deja comprimate (png, zip).
+
+34. Diferența dintre AddControllers, AddControllersWithViews, AddRazorPages
+AddControllers: doar API-uri JSON; fără suport Razor. AddControllersWithViews: MVC clasic (API + View-uri Razor). AddRazorPages: Razor Pages only. Poți combina pentru aplicații hibride.
+
+35. GraphQL cu HotChocolate
+HotChocolate construiește un schema first sau code first. În Program.cs: builder.Services.AddGraphQLServer().AddQueryType<Query>();. Endpoint-ul /graphql acceptă query-uri și mutate interactiv prin Banana Cake Pop. GraphQL permite cereri flexibile, reduce overfetching și combină resurse.
+
+36. MediatR și CQRS
+MediatR implementează pattern-ul mediator, decuplând sender de handler. Comenzile și interogările (IRequest<T>) sunt procesate de handleri înregistrându-se prin builder.Services.AddMediatR(...). Astfel controllerul nu conține logică de domeniu, iar CQRS separă citirile de scrieri, facilitând scalare și testare.
+
+37. Task-uri recurente cu Hangfire/Quartz.NET
+Hangfire folosește un dashboard și stochează job-urile în DB; BackgroundJob.Schedule(() => SendEmail(), TimeSpan.FromDays(1)) ori RecurringJob.AddOrUpdate("cleanup", () => Cleanup(), Cron.Daily). Quartz oferă același concept, dar cu scheduler extensibil. Worker Service execută trigger-ele, iar DI injectează serviciile necesare.
+
+38. WebSockets direct în ASP.NET Core
+app.UseWebSockets(); app.Map("/ws", async context => { var ws = await context.WebSockets.AcceptWebSocketAsync(); ... } ). WebSockets oferă duplex real. Recomandat când vrei control fin, fără overhead-ul SignalR, pentru streaming binar personalizat. Dar ai nevoie de management manual la reconectare și fallback.
+
+39. Rate Limiting (AspNetCoreRateLimit)
+Biblioteca citește reguli din appsettings.json (număr request-uri per IP sau client-id). Middleware-ul consultă IRateLimitCounterStore (Memory, Redis). Odată depășit, răspunsul 429 include antete Retry-After. Rate limiting apără API-urile de abuz și stabilizează încărcarea serverului.
+
+40. Feature Folders vs structura MVC clasică
+Feature Folders grupează toate fișierele (controller, view, model) de aceeași funcționalitate în același folder (/Features/Orders). Reduce dispersia codului și ușurează onboarding-ul, în special pe echipe mari. MVC clasic grupează pe tip (/Controllers, /Views) ceea ce poate duce la navigare greoaie când cresc modulele.
+
+41. Rolul IApplicationBuilder și ordinea middleware-urilor
+IApplicationBuilder construiește lanțul de procesare. Ordinea este importantă: UseRouting trebuie înainte de UseAuthorization; UseCors înainte de MVC; UseStaticFiles devreme pentru fișiere statice. Middleware-urile pot scurtcircuita cererea, deci plasarea greșită poate bloca fluxul sau executa logică ineficient.
+
+42. Streaming fișiere mari
+Se apelează PhysicalFileResult ori PushStreamContent cu FileStream deschis și EnableRangeProcessing = true pentru resume. Antet Content-Disposition sugerează numele fișierului. Buffer-ul trebuie setat mic pentru a evita consumul de memorie, iar Response.StartAsync() trimite header-ele înainte de citirea completă.
+
+43. Upload fișiere în Razor Pages
+Proprietatea IFormFile primește fișierul; validările includ dimensiune (file.Length), extensie (Path.GetExtension), tip MIME. Se copiază în FileStream într-un folder safe, eventual renumind cu GUID. Pentru securitate, scanează conținutul și folosește AntiforgeryToken.
+
+44. State management Blazor
+Blazor Server păstrează starea componentei pe server în circuitul SignalR; la refresh se pierde dacă nu e serializată. Blazor Wasm păstrează starea în memorie browser; poți salva în localStorage, IndexedDB sau sessionStorage. Dezavantaj: datele pot fi citite de client.
+
+45. Paging, sorting, filtering cu LINQ
+Expune parametri pageNumber, pageSize, sortBy, search. Folosește AsQueryable(), Where, OrderBy, Skip, Take. Returnează un DTO cu total pages și items. Indexuri DB pe coloanele filtrate cresc performanța.
+
+46. Dapper alături de EF Core
+EF Core pentru CRUD și integrare migrare; Dapper pentru interogări complexe performante. Poți partaja conexiunea DbConnection (din context) către Dapper, menținând tranzacția. Astfel păstrezi productivitatea EF la scrieri, dar ai control fine-tuned la citiri.
+
+47. HttpClientFactory
+services.AddHttpClient("github", client => client.BaseAddress = new Uri("https://api.github.com")); creează pool-uri și gestionează sockets exhaustion resetând handler-ele periodic. Poți adăuga policies Polly (retry, circuit breaker). Instanțierea directă de HttpClient menține conexiuni deschise indefinit, ducând la erori.
+
+48. Session vs TempData
+Session stochează date arbitrare pe server, identificate prin cookie; disponibilă între multiple cereri până expiră. TempData folosește ITempDataProvider (implicit cookie-based) și persistă doar până se citește. Utilă pentru mesaje flash după redirect.
+
+49. Pipeline CI/CD (GitHub Actions / Azure DevOps)
+Workflow-ul include pași: checkout cod, set up .NET SDK, restore, build, test, publish, docker build și push, apoi deploy pe Azure Web App cu azure/login și azure/webapps-deploy. Environment secrets stochează cheile. Stagiile pot rula paralel pentru OS-uri diferite.
+
+50. Migrarea ASP.NET MVC 5 la ASP.NET Core
+Analizează dependențele: WebForms nu e suportat, ASPX trebuie rescris în Razor. Înlocuiește System.Web cu middleware-uri, HttpContext.Current cu DI. Portarea autentificării impune trecerea la ASP.NET Core Identity sau JWT. Convertirea Global.asax se face în Program.cs. Diferențele de configurare, pipeline și API-uri cer refactor masiv, dar câștigul constă în cross-platform, performanță și hosting modern.

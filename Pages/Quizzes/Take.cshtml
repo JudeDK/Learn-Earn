@@ -1,0 +1,28 @@
+@page
+@model Learn_Earn.Pages.Quizzes.TakeModel
+@{
+    Layout = "_Layout";
+}
+
+<h2>Take Quiz: @Model.Quiz?.Title</h2>
+
+<form method="post">
+    <input type="hidden" name="id" value="@Model.Quiz?.Id" />
+    @for (int i = 0; i < (Model.Questions?.Count ?? 0); i++)
+    {
+        var q = Model.Questions[i];
+        <div>
+            <p><strong>Q@(i+1):</strong> @q.QuestionText</p>
+            @{ 
+                var options = (q.Options ?? "").Split('|');
+                for (int oi = 0; oi < options.Length; oi++)
+                {
+                    <div>
+                        <input type="radio" name="Answers[@q.Id]" value="@oi" /> @options[oi]
+                    </div>
+                }
+            }
+        </div>
+    }
+    <button type="submit">Submit</button>
+</form>

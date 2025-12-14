@@ -1,0 +1,32 @@
+@using Learn_Earn.Data
+@using Learn_Earn.Models
+@using Microsoft.AspNetCore.Identity
+@inject ApplicationDbContext Db
+@inject UserManager<IdentityUser> UserManager
+@{
+    var userId = UserManager.GetUserId(User);
+    if (string.IsNullOrEmpty(userId)) { <text></text>; return; }
+    var notes = Db.ProfessorNotifications.Where(n => n.ProfessorUserId == userId && !n.IsHandled).OrderByDescending(n => n.CreatedAt).Take(10).ToList();
+}
+
+@if (notes.Any())
+{
+    <div class="card mb-3">
+        <div class="card-header">Notificări studenți</div>
+        <div class="list-group list-group-flush">
+            @foreach (var n in notes)
+            {
+                var student = UserManager.FindByIdAsync(n.StudentUserId).GetAwaiter().GetResult();
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <div><strong>@(student?.UserName ?? n.StudentUserId)</strong> a finalizat lecția ID @n.LessonId</div>
+                        <small class="text-muted">@n.CreatedAt.ToString("g")</small>
+                    </div>
+                    <div>
+                        <a class="btn btn-sm btn-primary" asp-page="/Profesori/ReviewAttempt" asp-route-id="@n.Id">Dă quiz</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

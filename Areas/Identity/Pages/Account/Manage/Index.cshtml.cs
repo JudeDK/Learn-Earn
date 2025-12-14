@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using Microsoft.AspNetCore.Authentication;
+
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
@@ -78,7 +80,11 @@ namespace Learn_Earn.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                // If the cookie/claims refer to a user that no longer exists in the
+                // database, sign the principal out and redirect to the login page
+                // so the user can re-authenticate against the current DB.
+                await HttpContext.SignOutAsync();
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
 
             await LoadAsync(user);
@@ -90,7 +96,9 @@ namespace Learn_Earn.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                // Same fallback as OnGet: sign out and redirect to login.
+                await HttpContext.SignOutAsync();
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
 
             if (!ModelState.IsValid)

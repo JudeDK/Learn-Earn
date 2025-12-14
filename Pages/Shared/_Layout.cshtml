@@ -50,6 +50,13 @@
             </div>
         </nav>
     </header>
+    @* Professor notifications panel rendered below header for professors *@
+    @if (User.Identity?.IsAuthenticated == true && (User.IsInRole("Profesor") || User.IsInRole("Admin")))
+    {
+        <div class="container">
+            <partial name="_ProfessorNotifications" />
+        </div>
+    }
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

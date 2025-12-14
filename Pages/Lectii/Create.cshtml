@@ -6,7 +6,7 @@
 
 <h1>Creează lecție</h1>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label class="form-label">Titlu</label>
         <input asp-for="Lesson.Title" class="form-control" />
@@ -30,6 +30,10 @@
     <div class="mb-3">
         <label class="form-label">Conținut</label>
         <textarea asp-for="Lesson.Content" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fișier atașat (PDF / TXT)</label>
+        <input type="file" name="Attachment" class="form-control" />
     </div>
     <button class="btn btn-primary">Creează</button>
 </form>

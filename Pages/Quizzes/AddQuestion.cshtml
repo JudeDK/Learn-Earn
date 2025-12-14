@@ -1,0 +1,21 @@
+@page
+@model Learn_Earn.Pages.Quizzes.AddQuestionModel
+
+<h2>Add Question to Quiz @Model.QuizId</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="QuizId" />
+    <div>
+        <label>Question text</label>
+        <input asp-for="QuestionText" />
+    </div>
+    <div>
+        <label>Options (separate options with | )</label>
+        <input asp-for="Options" />
+    </div>
+    <div>
+        <label>Correct option index (0-based)</label>
+        <input asp-for="CorrectIndex" />
+    </div>
+    <button type="submit">Add question</button>
+</form>

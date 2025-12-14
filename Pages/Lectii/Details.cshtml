@@ -12,3 +12,38 @@
 <div>
     @Html.Raw(Model.Lesson.Content)
 </div>
+
+<hr />
+<div>
+    <h4>Progress</h4>
+    @if (Model.Progress != null && Model.Progress.CompletedSections > 0)
+    {
+        <p class="text-success">✓ Lecție finalizată</p>
+    }
+    else if (Model.Progress != null)
+    {
+        <p>Secțiuni finalizate: @Model.Progress.CompletedSections</p>
+        <form method="post" asp-page-handler="MarkSection" asp-route-id="@Model.Lesson.Id">
+            <button type="submit" class="btn btn-primary">Marchează lecția ca finalizată</button>
+        </form>
+    }
+    else
+    {
+        <p>Nu ai început această lecție.</p>
+        <form method="post" asp-page-handler="MarkSection" asp-route-id="@Model.Lesson.Id">
+            <button type="submit" class="btn btn-primary">Marchează lecția ca finalizată</button>
+        </form>
+    }
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Lesson.AttachmentPath))
+{
+    <div class="mt-3">
+        <h4>Fișiere atașate</h4>
+        <p>
+            <a class="btn btn-outline-secondary" href="@Model.Lesson.AttachmentPath" download="@Model.Lesson.AttachmentFileName">
+                Descarcă: @Model.Lesson.AttachmentFileName
+            </a>
+        </p>
+    </div>
+}

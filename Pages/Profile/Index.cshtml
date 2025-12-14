@@ -1,0 +1,50 @@
+@page
+@model Learn_Earn.Pages.Profile.IndexModel
+
+<h2>Profil</h2>
+
+<p><strong>Nivel:</strong> @Model.Level</p>
+@if (Model.Xp != null)
+{
+    <p><strong>XP total:</strong> @Model.Xp.TotalXp</p>
+    <p><strong>XP până la nivelul următor:</strong> @Model.XpToNext</p>
+}
+else
+{
+    <p>XP total: 0</p>
+    <p><strong>XP până la nivelul următor:</strong> @Model.XpToNext</p>
+}
+
+<div class="mb-3" style="max-width:420px;">
+    <div class="d-flex justify-content-between mb-1">
+        <small>Progres către nivelul @Model.Level + 1</small>
+        <small><strong>@Model.ProgressPercent% (@(Model.Xp?.TotalXp ?? 0)/@Model.NextLevelXp XP)</strong></small>
+    </div>
+    <div class="progress" style="height:20px;">
+        <div class="progress-bar" role="progressbar" style="width:@Model.ProgressPercent%" aria-valuenow="@Model.ProgressPercent" aria-valuemin="0" aria-valuemax="100">
+            @Model.ProgressPercent%
+        </div>
+    </div>
+</div>
+
+<h3>Realizări</h3>
+<div class="card p-3 mb-3">
+    <p>Insigne obținute pentru realizări și streak-uri.</p>
+    @if (Model.Badges?.Any() ?? false)
+    {
+        <div class="d-flex flex-wrap">
+            @foreach (var b in Model.Badges)
+            {
+                <div class="badge-card m-2 p-2 border rounded" style="min-width:140px;">
+                    <div><strong>@b.Name</strong></div>
+                    <div class="text-muted" style="font-size:0.85em">@b.AwardedAt.ToString("g")</div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Nu ai realizări încă. Începe o lecție pentru a câștiga prima insignă!</p>
+    }
+</div>
+

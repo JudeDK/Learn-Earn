@@ -1,0 +1,14 @@
+@page
+@model Learn_Earn.Pages.Quizzes.ResultModel
+
+<h2>Quiz Result</h2>
+
+@if (Model.Attempt != null)
+{
+    <p>Scor: @Model.Attempt.Score / @Model.Attempt.Total</p>
+    <p>Data: @Model.Attempt.AttemptedAt</p>
+}
+else
+{
+    <p>Rezultatul nu a fost găsit.</p>
+}

@@ -5,25 +5,30 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a id="manage" class="nav-link text-dark"
-               asp-area="Identity"
-               asp-page="/Account/Manage/Index"
+        <li class="nav-item dropdown" style="position:relative;">
+            <a id="manage" class="nav-link text-dark dropdown-toggle"
+               href="#"
+               role="button"
+               aria-expanded="false"
                title="Manage">
-                Hello @UserManager.GetUserName(User)!
+                @UserManager.GetUserName(User)
             </a>
+            <div class="dropdown-menu" style="min-width:200px;">
+                <a class="dropdown-item" asp-area="" asp-page="/Index">Home</a>
+                <a class="dropdown-item" asp-area="" asp-page="/Profile/Index">Profil</a>
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Setări cont</a>
+                <div class="dropdown-divider"></div>
+                <form id="logoutForm" class="px-3" asp-area="Identity" asp-page="/Account/Logout" method="post">
+                    <button id="logout" type="submit" class="btn btn-link text-dark p-0">Logout</button>
+                </form>
+            </div>
         </li>
-        <li class="nav-item">
-            <form id="logoutForm" class="form-inline"
-                  asp-area="Identity"
-                  asp-page="/Account/Logout"
-                  asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                <button id="logout" type="submit"
-                        class="nav-link btn btn-link text-dark border-0">
-                    Logout
-                </button>
-            </form>
-        </li>
+        <style>
+            /* show dropdown on hover */
+            .nav-item.dropdown:hover > .dropdown-menu { display: block; }
+            /* keep default appearance */
+            .nav-item.dropdown > a { cursor: pointer; }
+        </style>
     }
     else
     {

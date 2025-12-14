@@ -27,6 +27,11 @@ namespace Learn_Earn.Models
         public string? CreatedByUserId { get; set; }
         public string? CreatedByEmail { get; set; }
 
+        // Attachment metadata (optional)
+        public string? AttachmentFileName { get; set; }
+        public string? AttachmentPath { get; set; }
+        public string? AttachmentContentType { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

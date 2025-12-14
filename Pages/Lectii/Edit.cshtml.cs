@@ -22,6 +22,9 @@ namespace Learn_Earn.Pages.Lectii
         [BindProperty]
         public Lesson Lesson { get; set; }
 
+            [BindProperty]
+            public IFormFile? Attachment { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Lesson = await _db.Lessons.FindAsync(id);
@@ -55,6 +58,28 @@ namespace Learn_Earn.Pages.Lectii
             existing.Difficulty = Lesson.Difficulty;
             existing.DurationMinutes = Lesson.DurationMinutes;
             existing.Content = Lesson.Content;
+
+            // handle new attachment if uploaded
+            if (Attachment != null && Attachment.Length > 0)
+            {
+                var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                Directory.CreateDirectory(uploads);
+                // remove previous file if present
+                if (!string.IsNullOrEmpty(existing.AttachmentPath))
+                {
+                    var prev = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existing.AttachmentPath.TrimStart('/','\\'));
+                    try { if (System.IO.File.Exists(prev)) System.IO.File.Delete(prev); } catch { }
+                }
+                var unique = Guid.NewGuid().ToString() + Path.GetExtension(Attachment.FileName);
+                var filePath = Path.Combine(uploads, unique);
+                using (var fs = System.IO.File.Create(filePath))
+                {
+                    await Attachment.CopyToAsync(fs);
+                }
+                existing.AttachmentFileName = Attachment.FileName;
+                existing.AttachmentPath = "/uploads/" + unique;
+                existing.AttachmentContentType = Attachment.ContentType;
+            }
 
             await _db.SaveChangesAsync();
             return RedirectToPage("/Profesori/MyLectii");
