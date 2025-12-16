@@ -44,8 +44,17 @@ namespace Learn_Earn.Pages.Lectii
                     Progress = await _db.LessonProgresses.FirstOrDefaultAsync(p => p.LessonId == id && p.UserId == userId);
                 }
 
-                // Always load a quiz for this lesson (students should be able to see/take it)
-                QuizForLesson = await _db.Quizzes.FirstOrDefaultAsync(q => q.LessonId == id);
+                // Load a quiz for this lesson.
+                // Professors/admins may see any quiz; students only see quizzes that are not targeted or targeted to them.
+                var currentUserId = _userManager.GetUserId(User);
+                if (User.IsInRole("Profesor") || User.IsInRole("Admin"))
+                {
+                    QuizForLesson = await _db.Quizzes.FirstOrDefaultAsync(q => q.LessonId == id);
+                }
+                else
+                {
+                    QuizForLesson = await _db.Quizzes.FirstOrDefaultAsync(q => q.LessonId == id && (q.TargetUserId == null || q.TargetUserId == currentUserId));
+                }
                 if (QuizForLesson != null)
                 {
                     QuizQuestions = await _db.QuizQuestions.Where(q => q.QuizId == QuizForLesson.Id).ToListAsync();

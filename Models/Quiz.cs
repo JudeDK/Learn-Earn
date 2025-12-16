@@ -25,5 +25,7 @@ namespace Learn_Earn.Models
         public string? AttachmentFileName { get; set; }
         public string? AttachmentPath { get; set; }
         public string? AttachmentContentType { get; set; }
+        // If set, only this user may see/take the quiz (professors/admins may still view)
+        public string? TargetUserId { get; set; }
     }
 }

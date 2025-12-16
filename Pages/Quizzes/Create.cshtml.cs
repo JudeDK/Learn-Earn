@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Learn_Earn.Data;
 using Learn_Earn.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 
@@ -71,6 +72,31 @@ namespace Learn_Earn.Pages.Quizzes
                     Quiz.AttachmentFileName = Attachment.FileName;
                     Quiz.AttachmentPath = "/uploads/" + guidName;
                     Quiz.AttachmentContentType = Attachment.ContentType;
+                }
+
+                // If this quiz was created from a professor notification, target it to that student
+                if (NotificationId.HasValue)
+                {
+                    try
+                    {
+                        var notif = await _db.ProfessorNotifications.FindAsync(NotificationId.Value);
+                        if (notif != null)
+                        {
+                            Quiz.TargetUserId = notif.StudentUserId;
+                        }
+                    }
+                    catch { }
+                }
+
+                // If this quiz targets a specific user, validate the user has completed the lesson
+                if (!string.IsNullOrEmpty(Quiz.TargetUserId) && Quiz.LessonId.HasValue)
+                {
+                    var prog = await _db.LessonProgresses.FirstOrDefaultAsync(p => p.LessonId == Quiz.LessonId.Value && p.UserId == Quiz.TargetUserId && p.CompletedSections > 0);
+                    if (prog == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Nu poți crea un quiz țintit unui student care nu a finalizat lecția.");
+                        return Page();
+                    }
                 }
 
                 _db.Quizzes.Add(Quiz);

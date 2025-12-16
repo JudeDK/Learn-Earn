@@ -34,6 +34,12 @@ namespace Learn_Earn.Pages.Quizzes
         {
             Quiz = await _db.Quizzes.FindAsync(id);
             if (Quiz == null) return NotFound();
+            // If quiz is targeted, only allow the target student (or professors/admins) to access it
+            var currentUserId = _userManager.GetUserId(User);
+            if (!string.IsNullOrEmpty(Quiz.TargetUserId) && !(User.IsInRole("Profesor") || User.IsInRole("Admin") || currentUserId == Quiz.TargetUserId))
+            {
+                return Forbid();
+            }
             Questions = await _db.QuizQuestions.Where(q => q.QuizId == id).ToListAsync();
             // Require that student completed the lesson before taking quiz
             var userId = _userManager.GetUserId(User);
@@ -59,6 +65,12 @@ namespace Learn_Earn.Pages.Quizzes
             {
                 Quiz = await _db.Quizzes.FindAsync(id);
                 if (Quiz == null) return NotFound();
+                // Prevent submissions by users who are not the target (unless professor/admin)
+                var currentUserId = _userManager.GetUserId(User) ?? "";
+                if (!string.IsNullOrEmpty(Quiz.TargetUserId) && !(User.IsInRole("Profesor") || User.IsInRole("Admin") || currentUserId == Quiz.TargetUserId))
+                {
+                    return Forbid();
+                }
                 Questions = await _db.QuizQuestions.Where(q => q.QuizId == id).ToListAsync();
 
                 int total = Questions.Count;

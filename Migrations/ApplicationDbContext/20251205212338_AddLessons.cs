@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Learn_Earn.Migrations.ApplicationDbContext
+namespace Learn_Earn.Migrations_Old.ApplicationDbContext
 {
     /// <inheritdoc />
     public partial class AddLessons : Migration

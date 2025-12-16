@@ -1,0 +1,92 @@
+@page
+@model Learn_Earn.Pages.Student.MyProgressModel
+@{
+    ViewData["Title"] = "Progresul meu";
+}
+
+<h1>Progresul meu</h1>
+
+<div class="mb-4">
+    <h4>Lectii finalizate (@Model.CompletedLessons.Count)</h4>
+    @if (!Model.CompletedLessons.Any())
+    {
+        <p>Nu ai finalizat încă nicio lecție.</p>
+    }
+    else
+    {
+        <ul class="list-group">
+            @foreach (var item in Model.CompletedLessons)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <strong>@item.Lesson.Title</strong>
+                        <div class="small text-muted">Actualizat: @item.Progress.UpdatedAt.ToLocalTime().ToString("g")</div>
+                    </div>
+                    <div>
+                        <a class="btn btn-sm btn-outline-primary" asp-page="/Lectii/Details" asp-route-id="@item.Lesson.Id">Vezi lecția</a>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+<div>
+    <h4>Insigne (@Model.Badges.Count)</h4>
+    @if (!Model.Badges.Any())
+    {
+        <p>Nu ai primit încă nicio insignă.</p>
+    }
+    else
+    {
+        <div class="mb-3">
+            @foreach (var b in Model.Badges)
+            {
+                <span class="badge bg-secondary me-1">@b.Name</span>
+            }
+        </div>
+    }
+
+    <h4>Quiz-uri / încercări (@Model.QuizAttempts.Count)</h4>
+    @if (!Model.QuizAttempts.Any())
+    {
+        <p>Nu ai dat încă niciun quiz.</p>
+    }
+    else
+    {
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Quiz</th>
+                    <th>Scor</th>
+                    <th>Data</th>
+                    <th>Validat</th>
+                    <th>Notă profesor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var a in Model.QuizAttempts)
+                {
+                    var title = Model.QuizTitles.ContainsKey(a.QuizId) ? Model.QuizTitles[a.QuizId] : ("Quiz " + a.QuizId);
+                    var lessonId = Model.QuizLessonIds.ContainsKey(a.QuizId) ? Model.QuizLessonIds[a.QuizId] : (int?)null;
+                    <tr>
+                        <td>
+                            @if (lessonId.HasValue)
+                            {
+                                <a asp-page="/Lectii/Details" asp-route-id="@lessonId">@title</a>
+                            }
+                            else
+                            {
+                                @title
+                            }
+                        </td>
+                        <td>@a.Score / @a.Total</td>
+                        <td>@a.AttemptedAt.ToLocalTime().ToString("g")</td>
+                        <td>@(a.IsValidated ? "Da" : "Nu")</td>
+                        <td>@(string.IsNullOrEmpty(a.ValidationNote) ? "-" : a.ValidationNote)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

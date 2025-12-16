@@ -1,0 +1,19 @@
+@page
+@model Learn_Earn.Pages.Admin.AwardLevelBadgesModel
+@{
+    Layout = "_Layout";
+}
+
+<h1>Award Level Badges (Admin)</h1>
+
+<p>This page awards retroactive `Level {n}` badges to users whose XP already qualifies them.
+Only accessible by users in the `Admin` role.</p>
+
+<div>
+    <ul>
+    @foreach(var line in Model.Report)
+    {
+        <li>@line</li>
+    }
+    </ul>
+</div>

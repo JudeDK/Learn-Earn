@@ -1077,7 +1077,7 @@ Marcarea manuală de
 către studenți a
 secțiunilor unei lecții
 pentru a facilita
-parcurgerea materialului
+parcurgerea materialuluid
 Parcurgerea și
 rezolvarea unui
 quiz,
