@@ -1,10 +1,10 @@
 @page "{id:int}"
 @model Learn_Earn.Pages.Lectii.EditModel
 @{
-    ViewData["Title"] = "Editeaza Lecție";
+    ViewData["Title"] = "Edit lesson";
 }
 
-<h1>Editeaza Lecție</h1>
+<h1>Edit lesson</h1>
 
 <form method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Lesson.Id" />
@@ -30,15 +30,15 @@
         <textarea asp-for="Lesson.Content" class="form-control"></textarea>
     </div>
     <div class="mb-3">
-        <label class="form-label">Fișier atașat (PDF / TXT) — încarcă pentru a înlocui</label>
+        <label class="form-label">Attached file (PDF / TXT) — upload to replace</label>
         <input type="file" name="Attachment" class="form-control" />
         @if (!string.IsNullOrEmpty(Model.Lesson.AttachmentFileName))
         {
-            <p class="mt-2">Fișier curent: <a href="@Model.Lesson.AttachmentPath" download>@Model.Lesson.AttachmentFileName</a></p>
+            <p class="mt-2">Current file: <a href="@Model.Lesson.AttachmentPath" download>@Model.Lesson.AttachmentFileName</a></p>
         }
     </div>
-    <button class="btn btn-primary">Salveaza</button>
-    <a asp-page="/Profesori/MyLectii" class="btn btn-secondary ms-2">Anuleaza</a>
+    <button class="btn btn-primary">Save</button>
+    <a asp-page="/Profesori/MyLectii" class="btn btn-secondary ms-2">Cancel</a>
 </form>
 
 @section Scripts {

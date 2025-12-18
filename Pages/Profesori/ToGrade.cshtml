@@ -4,11 +4,11 @@
     Layout = "_Layout";
 }
 
-<h2>Quiz-uri de notat</h2>
+<h2>Quizzes to grade</h2>
 
 @if (!Model.PendingAttempts.Any())
 {
-    <div class="alert alert-info">Nu sunt quiz-uri în așteptare pentru notare.</div>
+    <div class="alert alert-info">There are no quizzes waiting for grading.</div>
 }
 
 @foreach (var p in Model.PendingAttempts)
@@ -16,21 +16,21 @@
     <div class="card mb-3">
         <div class="card-header">@p.QuizTitle - @p.StudentName (@p.StudentEmail) — Attempt #@p.Attempt.Id</div>
             <div class="card-body">
-            <p><strong>Trimis la:</strong> @p.Attempt.AttemptedAt.ToLocalTime()</p>
+            <p><strong>Submitted at:</strong> @p.Attempt.AttemptedAt.ToLocalTime()</p>
             @if (!string.IsNullOrEmpty(p.Attempt.StudentSubmissionPath))
             {
-                <p><a class="btn btn-outline-primary" asp-page-handler="Download" asp-route-attemptId="@p.Attempt.Id">Descarcă fișier student</a></p>
+                <p><a class="btn btn-outline-primary" asp-page-handler="Download" asp-route-attemptId="@p.Attempt.Id">Download student file</a></p>
             }
             else
             {
-                <p class="text-muted">Studentul nu a încărcat un fișier.</p>
+                <p class="text-muted">The student did not upload a file.</p>
             }
 
             <form method="post" asp-page-handler="Grade">
                 <input type="hidden" name="Input.AttemptId" value="@p.Attempt.Id" />
                 <div class="row g-2">
                     <div class="col-md-2">
-                        <label class="form-label">Scor</label>
+                        <label class="form-label">Score</label>
                         <input class="form-control" type="number" name="Input.Score" value="@p.Attempt.Score" />
                     </div>
                     <div class="col-md-2">
@@ -38,15 +38,15 @@
                         <input class="form-control" type="number" name="Input.Total" value="@(p.Attempt.Total == 0 ? 100 : p.Attempt.Total)" />
                     </div>
                     <div class="col-md-2 form-check align-self-end">
-                        <input class="form-check-input" type="checkbox" name="Input.Passed" value="true" /> <label class="form-check-label">Promovat</label>
+                        <input class="form-check-input" type="checkbox" name="Input.Passed" value="true" /> <label class="form-check-label">Passed</label>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Notă / Comentariu</label>
-                        <textarea class="form-control" name="Input.Note" rows="3" placeholder="Adaugă o notă sau comentariu pentru student..."></textarea>
+                        <label class="form-label">Note / comment</label>
+                        <textarea class="form-control" name="Input.Note" rows="3" placeholder="Add a note or comment for the student..."></textarea>
                     </div>
                 </div>
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-success">Salvează notare</button>
+                    <button type="submit" class="btn btn-success">Save grading</button>
                 </div>
             </form>
         </div>

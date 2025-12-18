@@ -1,16 +1,16 @@
 @page
 @model Learn_Earn.Pages.Student.MyProgressModel
 @{
-    ViewData["Title"] = "Progresul meu";
+    ViewData["Title"] = "My progress";
 }
 
-<h1>Progresul meu</h1>
+<h1>My progress</h1>
 
 <div class="mb-4">
-    <h4>Lectii finalizate (@Model.CompletedLessons.Count)</h4>
+    <h4>Completed lessons (@Model.CompletedLessons.Count)</h4>
     @if (!Model.CompletedLessons.Any())
     {
-        <p>Nu ai finalizat încă nicio lecție.</p>
+        <p>You have not completed any lesson yet.</p>
     }
     else
     {
@@ -20,10 +20,10 @@
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div>
                         <strong>@item.Lesson.Title</strong>
-                        <div class="small text-muted">Actualizat: @item.Progress.UpdatedAt.ToLocalTime().ToString("g")</div>
+                        <div class="small text-muted">Updated: @item.Progress.UpdatedAt.ToLocalTime().ToString("g")</div>
                     </div>
                     <div>
-                        <a class="btn btn-sm btn-outline-primary" asp-page="/Lectii/Details" asp-route-id="@item.Lesson.Id">Vezi lecția</a>
+                        <a class="btn btn-sm btn-outline-primary" asp-page="/Lectii/Details" asp-route-id="@item.Lesson.Id">View lesson</a>
                     </div>
                 </li>
             }
@@ -32,10 +32,10 @@
 </div>
 
 <div>
-    <h4>Insigne (@Model.Badges.Count)</h4>
+    <h4>Badges (@Model.Badges.Count)</h4>
     @if (!Model.Badges.Any())
     {
-        <p>Nu ai primit încă nicio insignă.</p>
+        <p>You have not earned any badges yet.</p>
     }
     else
     {
@@ -47,10 +47,10 @@
         </div>
     }
 
-    <h4>Quiz-uri / încercări (@Model.QuizAttempts.Count)</h4>
+    <h4>Quizzes / attempts (@Model.QuizAttempts.Count)</h4>
     @if (!Model.QuizAttempts.Any())
     {
-        <p>Nu ai dat încă niciun quiz.</p>
+        <p>You have not taken any quizzes yet.</p>
     }
     else
     {
@@ -58,10 +58,10 @@
             <thead>
                 <tr>
                     <th>Quiz</th>
-                    <th>Scor</th>
-                    <th>Data</th>
-                    <th>Validat</th>
-                    <th>Notă profesor</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                    <th>Validated</th>
+                    <th>Teacher note</th>
                 </tr>
             </thead>
             <tbody>
@@ -82,7 +82,7 @@
                         </td>
                         <td>@a.Score / @a.Total</td>
                         <td>@a.AttemptedAt.ToLocalTime().ToString("g")</td>
-                        <td>@(a.IsValidated ? "Da" : "Nu")</td>
+                        <td>@(a.IsValidated ? "Yes" : "No")</td>
                         <td>@(string.IsNullOrEmpty(a.ValidationNote) ? "-" : a.ValidationNote)</td>
                     </tr>
                 }

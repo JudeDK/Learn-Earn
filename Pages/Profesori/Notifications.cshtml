@@ -1,7 +1,7 @@
 @page
 @model Learn_Earn.Pages.Profesori.NotificationsModel
 
-<h2>Notificări studenți</h2>
+<h2>Student notifications</h2>
 
 @if (Model.Notifications?.Any() ?? false)
 {
@@ -10,11 +10,11 @@
         {
             <div class="list-group-item d-flex justify-content-between align-items-center">
                 <div>
-                    <div><strong>@n.StudentUserId</strong> a finalizat lecția ID @n.LessonId</div>
+                    <div><strong>@n.StudentUserId</strong> has completed lesson ID @n.LessonId</div>
                     <div class="text-muted" style="font-size:0.85em">@n.CreatedAt.ToString("g")</div>
                 </div>
                 <div>
-                    <a class="btn btn-sm btn-primary" asp-page="/Lectii/Details" asp-route-id="@n.LessonId" asp-route-notificationId="@n.Id">Dă quiz</a>
+                    <a class="btn btn-sm btn-primary" asp-page="/Lectii/Details" asp-route-id="@n.LessonId" asp-route-notificationId="@n.Id">Give quiz</a>
                 </div>
             </div>
         }
@@ -22,5 +22,5 @@
 }
 else
 {
-    <div class="alert alert-info">Nu există notificări curente.</div>
+    <div class="alert alert-info">There are no current notifications.</div>
 }

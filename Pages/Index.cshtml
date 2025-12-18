@@ -1,10 +1,48 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Learn & Earn";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row align-items-center mt-4">
+    <div class="col-lg-7 mb-4 mb-lg-0">
+        <div class="text-start text-lg-left">
+            <h1 class="display-hero mb-3">Level up your language skills, one lesson at a time.</h1>
+            <p class="hero-subtitle mb-4">
+                Track your progress, complete theory-rich lessons and quizzes, and earn badges as you move from basics
+                to confident communication in multiple languages.
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-primary btn-lg me-2 mb-2" asp-page="/Lectii/Index">
+                    Browse lessons
+                </a>
+                <a class="btn btn-outline-primary btn-lg mb-2" asp-page="/Student/MyProgress">
+                    View my progress
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card border-0">
+            <div class="card-header">
+                Today’s snapshot
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <span class="text-muted">Languages available:</span>
+                        <span class="ms-1">English, German, Romanian, Spanish, French</span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="text-muted">Lesson types:</span>
+                        <span class="ms-1">Grammar theory, practice tasks, homework ideas</span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="text-muted">Designed for:</span>
+                        <span class="ms-1">Students, teachers and self-learners</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>

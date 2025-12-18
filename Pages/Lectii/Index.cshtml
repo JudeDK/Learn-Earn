@@ -1,30 +1,30 @@
 @page
 @model Learn_Earn.Pages.Lectii.IndexModel
 @{
-    ViewData["Title"] = "Lecții";
+    ViewData["Title"] = "Lessons";
 }
 
-<h1>Lecții</h1>
+<h1>Lessons</h1>
 
 <form method="get" class="mb-3" id="filtersForm">
     <div class="row g-2">
         <div class="col-md-4">
-            <input class="form-control" name="Search" placeholder="Caută..." value="@Model.Search" />
+            <input class="form-control" name="Search" placeholder="Search..." value="@Model.Search" />
         </div>
         <div class="col-md-3">
-            <input class="form-control" name="Language" placeholder="Limba" value="@Model.Language" id="languageInput" readonly />
+            <input class="form-control" name="Language" placeholder="Language" value="@Model.Language" id="languageInput" readonly />
         </div>
         <div class="col-md-3">
-            <input class="form-control" name="Difficulty" placeholder="Dificultate" value="@Model.Difficulty" id="difficultyInput" readonly />
+            <input class="form-control" name="Difficulty" placeholder="Difficulty" value="@Model.Difficulty" id="difficultyInput" readonly />
         </div>
         <div class="col-md-3">
-            <input class="form-control" name="Professor" placeholder="Profesor" value="@Model.Professor" id="professorInput" readonly />
+            <input class="form-control" name="Professor" placeholder="Professor" value="@Model.Professor" id="professorInput" readonly />
         </div>
         <div class="col-md-2">
             <!-- Sort removed as requested -->
         </div>
         <div class="col-md-2 d-flex justify-content-end">
-            <button type="button" class="btn btn-primary" id="resetFilters">Resetează</button>
+            <button type="button" class="btn btn-primary" id="resetFilters">Reset</button>
         </div>
     </div>
     <input type="hidden" name="PageNumber" id="PageNumberHidden" value="@Model.PageNumber" />
@@ -33,15 +33,15 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Titlu</th>
-            <th>Profesor</th>
-            <th>Limbă</th>
-            <th>Dificultate</th>
-            <th>Durată (min)</th>
-            <th>Detalii</th>
+            <th>Title</th>
+            <th>Professor</th>
+            <th>Language</th>
+            <th>Difficulty</th>
+            <th>Duration (min)</th>
+            <th>Details</th>
             @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
             {
-                <th>Acțiuni Admin</th>
+                <th>Admin actions</th>
             }
         </tr>
     </thead>
@@ -55,12 +55,12 @@
             <td>@lec.Difficulty</td>
             <td>@lec.DurationMinutes</td>
             <td>
-                <a class="btn btn-sm btn-outline-primary" href="/Lectii/Details/@lec.Id">Vezi</a>
+                <a class="btn btn-sm btn-outline-primary" href="/Lectii/Details/@lec.Id">View</a>
             </td>
             @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
             {
                 <td>
-                    <a class="btn btn-sm btn-outline-danger" asp-page="/Lectii/Delete" asp-route-id="@lec.Id">Sterge</a>
+                    <a class="btn btn-sm btn-outline-danger" asp-page="/Lectii/Delete" asp-route-id="@lec.Id">Delete</a>
                 </td>
             }
         </tr>
@@ -90,7 +90,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Alege Limba</h5>
+        <h5 class="modal-title">Choose language</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -110,7 +110,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Alege Dificultatea</h5>
+        <h5 class="modal-title">Choose difficulty</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -130,7 +130,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Alege Profesor</h5>
+                <h5 class="modal-title">Choose professor</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

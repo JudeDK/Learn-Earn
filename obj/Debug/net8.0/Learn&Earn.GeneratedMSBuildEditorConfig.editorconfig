@@ -17,157 +17,157 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Learn_Earn
 build_property.RootNamespace = Learn_Earn
-build_property.ProjectDir = C:\Users\User\Desktop\test\Learn-Earn\
+build_property.ProjectDir = C:\Users\LENOVO\source\repos\Learn-Earn\Learn-Earn\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\User\Desktop\test\Learn-Earn
+build_property.MSBuildProjectDirectory = C:\Users\LENOVO\source\repos\Learn-Earn\Learn-Earn
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Areas/Identity/Pages/Account/Login.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Areas/Identity/Pages/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Areas/Identity/Pages/Account/Logout.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Areas/Identity/Pages/Account/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Areas/Identity/Pages/Account/Manage/Index.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Areas/Identity/Pages/Account/Manage/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX01hbmFnZU5hdi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Areas/Identity/Pages/Account/Register.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Areas/Identity/Pages/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Areas/Identity/Pages/Account/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Areas/Identity/Pages/_ViewImports.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Areas/Identity/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Admin/AwardLevelBadges.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Admin/AwardLevelBadges.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQXdhcmRMZXZlbEJhZGdlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Admin/Users.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Admin/Users.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cVXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Error.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Index.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Lectii/Create.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Lectii/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVjdGlpXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Lectii/Delete.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Lectii/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVjdGlpXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Lectii/Details.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Lectii/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVjdGlpXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Lectii/Edit.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Lectii/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVjdGlpXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Lectii/Index.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Lectii/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVjdGlpXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Privacy.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Profesori/MyLectii.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Profesori/MyLectii.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmVzb3JpXE15TGVjdGlpLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Profesori/Notifications.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Profesori/Notifications.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmVzb3JpXE5vdGlmaWNhdGlvbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Profesori/ReviewAttempt.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Profesori/ReviewAttempt.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmVzb3JpXFJldmlld0F0dGVtcHQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Profesori/ToGrade.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Profesori/ToGrade.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmVzb3JpXFRvR3JhZGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Profile/Index.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Profile/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmlsZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Quizzes/AddQuestion.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Quizzes/AddQuestion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVpenplc1xBZGRRdWVzdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Quizzes/Create.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Quizzes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVpenplc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Quizzes/Result.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Quizzes/Result.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVpenplc1xSZXN1bHQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Quizzes/Take.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Quizzes/Take.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVpenplc1xUYWtlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Shared/_Layout.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Shared/_LoginPartial.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Shared/_ProfessorNotifications.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Shared/_ProfessorNotifications.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9Qcm9mZXNzb3JOb3RpZmljYXRpb25zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/Student/MyProgress.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/Student/MyProgress.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudFxNeVByb2dyZXNzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/_ViewImports.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Desktop/test/Learn-Earn/Pages/_ViewStart.cshtml]
+[C:/Users/LENOVO/source/repos/Learn-Earn/Learn-Earn/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

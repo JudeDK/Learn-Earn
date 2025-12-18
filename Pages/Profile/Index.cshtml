@@ -1,24 +1,35 @@
 @page
 @model Learn_Earn.Pages.Profile.IndexModel
 
-<h2>Profil</h2>
+<h2>Profile</h2>
 
-<p><strong>Nivel:</strong> @Model.Level</p>
+<p><strong>Level:</strong> @Model.Level</p>
 @if (Model.Xp != null)
 {
-    <p><strong>XP total:</strong> @Model.Xp.TotalXp</p>
-    <p><strong>XP până la nivelul următor:</strong> @Model.XpToNext</p>
+    <p><strong>Total XP:</strong> @Model.Xp.TotalXp</p>
+    <p><strong>XP to next level:</strong> @Model.XpToNext</p>
 }
 else
 {
-    <p>XP total: 0</p>
-    <p><strong>XP până la nivelul următor:</strong> @Model.XpToNext</p>
+    <p>Total XP: 0</p>
+    <p><strong>XP to next level:</strong> @Model.XpToNext</p>
 }
 
 <div class="mb-3" style="max-width:420px;">
     <div class="d-flex justify-content-between mb-1">
-        <small>Progres către nivelul @Model.Level + 1</small>
-        <small><strong>@Model.ProgressPercent% (@(Model.Xp?.TotalXp ?? 0)/@Model.NextLevelXp XP)</strong></small>
+        <small>Progress to level @(Model.Level + 1)</small>
+        @{
+            var totalXp = Model.Xp?.TotalXp ?? 0;
+            var currentLevelXp = totalXp - Model.LevelMinXp;
+            if (currentLevelXp < 0) currentLevelXp = 0;
+            var levelRange = Model.NextLevelXp - Model.LevelMinXp;
+        }
+        <small>
+            <strong>
+                @Model.ProgressPercent%
+                (@currentLevelXp/@levelRange XP this level)
+            </strong>
+        </small>
     </div>
     <div class="progress" style="height:20px;">
         <div class="progress-bar" role="progressbar" style="width:@Model.ProgressPercent%" aria-valuenow="@Model.ProgressPercent" aria-valuemin="0" aria-valuemax="100">
@@ -27,9 +38,9 @@ else
     </div>
 </div>
 
-<h3>Realizări</h3>
+<h3>Achievements</h3>
 <div class="card p-3 mb-3">
-    <p>Insigne obținute pentru realizări și streak-uri.</p>
+    <p>Badges earned for achievements and streaks.</p>
     @if (Model.Badges?.Any() ?? false)
     {
         <div class="d-flex flex-wrap">
@@ -44,7 +55,7 @@ else
     }
     else
     {
-        <p>Nu ai realizări încă. Începe o lecție pentru a câștiga prima insignă!</p>
+        <p>You have no achievements yet. Start a lesson to earn your first badge!</p>
     }
 </div>
 

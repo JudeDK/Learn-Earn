@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Learn_Earn</a>
+                        <a class="navbar-brand" asp-area="" asp-page="/Index">Learn_Earn</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -26,12 +26,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Lectii/Index">Lecții</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Lectii/Index">Lessons</a>
                         </li>
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Student/MyProgress">Progresul meu</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Student/MyProgress">My progress</a>
                             </li>
                         }
                         @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
@@ -45,13 +45,13 @@
                         @if (User.Identity?.IsAuthenticated == true && (User.IsInRole("Profesor") || User.IsInRole("Admin")))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Profesori/MyLectii">Lectiile mele</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Profesori/MyLectii">My lessons</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Profesori/Notifications">Notificări</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Profesori/Notifications">Notifications</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Profesori/ToGrade">De notat</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Profesori/ToGrade">To grade</a>
                             </li>
                         }
                     </ul>

@@ -120,6 +120,12 @@ namespace Learn_Earn.Pages.Quizzes
                         // Do not award XP here; professor will validate and award badges/xp
                         await _db.SaveChangesAsync();
                         _logger.LogInformation("Created QuizAttempt Id {AttemptId}", attemptFile.Id);
+                        TempData["XpToastMessage"] = "Quiz submitted. A professor will review your file and XP will be awarded if you pass.";
+                        TempData["XpToastKind"] = "quiz";
+                        if (Quiz.LessonId.HasValue)
+                        {
+                            return RedirectToPage("/Lectii/Details", new { id = Quiz.LessonId.Value });
+                        }
                         return RedirectToPage("/Quizzes/Result", new { attemptId = attemptFile.Id });
                     }
                     else
@@ -168,9 +174,10 @@ namespace Learn_Earn.Pages.Quizzes
                 await _db.SaveChangesAsync();
 
                 // Redirect back to lesson details with a friendly TempData message
+                TempData["XpToastMessage"] = "Quiz submitted. It will be graded soon and XP will be updated based on your result.";
+                TempData["XpToastKind"] = "quiz";
                 if (Quiz.LessonId.HasValue)
                 {
-                    TempData["QuizSubmittedMessage"] = "Quiz trimis. Nota va fi afișată în curând în secțiunea lecției.";
                     return RedirectToPage("/Lectii/Details", new { id = Quiz.LessonId.Value });
                 }
 

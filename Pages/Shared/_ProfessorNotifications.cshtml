@@ -12,18 +12,18 @@
 @if (notes.Any())
 {
     <div class="card mb-3">
-        <div class="card-header">Notificări studenți</div>
+        <div class="card-header">Student notifications</div>
         <div class="list-group list-group-flush">
             @foreach (var n in notes)
             {
                 var student = UserManager.FindByIdAsync(n.StudentUserId).GetAwaiter().GetResult();
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <div><strong>@(student?.UserName ?? n.StudentUserId)</strong> a finalizat lecția ID @n.LessonId</div>
+                        <div><strong>@(student?.UserName ?? n.StudentUserId)</strong> has completed lesson ID @n.LessonId</div>
                         <small class="text-muted">@n.CreatedAt.ToString("g")</small>
                     </div>
                     <div>
-                        <a class="btn btn-sm btn-primary" asp-page="/Lectii/Details" asp-route-id="@n.LessonId" asp-route-notificationId="@n.Id">Dă quiz</a>
+                        <a class="btn btn-sm btn-primary" asp-page="/Lectii/Details" asp-route-id="@n.LessonId" asp-route-notificationId="@n.Id">Give quiz</a>
                     </div>
                 </div>
             }

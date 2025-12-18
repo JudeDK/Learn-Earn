@@ -1,23 +1,23 @@
 @page
 @model Learn_Earn.Pages.Profesori.MyLectiiModel
 @{
-    ViewData["Title"] = "Lectiile mele";
+    ViewData["Title"] = "My lessons";
 }
 
-<h1>Lectiile mele</h1>
+<h1>My lessons</h1>
 
 <p>
-    <a class="btn btn-primary" asp-page="/Lectii/Create">Adauga Lecție</a>
+    <a class="btn btn-primary" asp-page="/Lectii/Create">Add lesson</a>
 </p>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Titlu</th>
-            <th>Limbă</th>
-            <th>Dificultate</th>
-            <th>Durată</th>
-            <th>Acțiuni</th>
+            <th>Title</th>
+            <th>Language</th>
+            <th>Difficulty</th>
+            <th>Duration</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -29,9 +29,9 @@
             <td>@l.Difficulty</td>
             <td>@l.DurationMinutes</td>
             <td>
-                <a class="btn btn-sm btn-outline-primary" asp-page="/Lectii/Edit" asp-route-id="@l.Id">Editeaza</a>
-                <a class="btn btn-sm btn-outline-danger ms-2" asp-page="/Lectii/Delete" asp-route-id="@l.Id">Sterge</a>
-                <a class="btn btn-sm btn-outline-secondary ms-2" asp-page="/Lectii/Details" asp-route-id="@l.Id">Vezi</a>
+                <a class="btn btn-sm btn-outline-primary" asp-page="/Lectii/Edit" asp-route-id="@l.Id">Edit</a>
+                <a class="btn btn-sm btn-outline-danger ms-2" asp-page="/Lectii/Delete" asp-route-id="@l.Id">Delete</a>
+                <a class="btn btn-sm btn-outline-secondary ms-2" asp-page="/Lectii/Details" asp-route-id="@l.Id">View</a>
             </td>
         </tr>
     }

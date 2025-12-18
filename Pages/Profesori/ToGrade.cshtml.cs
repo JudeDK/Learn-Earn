@@ -107,7 +107,20 @@ namespace Learn_Earn.Pages.Profesori
             // Ensure professor owns the lesson for this quiz
             var quiz = await _db.Quizzes.FirstOrDefaultAsync(q => q.Id == attempt.QuizId);
             var lesson = quiz?.LessonId != null ? await _db.Lessons.FirstOrDefaultAsync(l => l.Id == quiz.LessonId) : null;
-            if (lesson == null || lesson.CreatedByUserId != userId) return Forbid();
+            if (lesson == null) return Forbid();
+
+            // Allow grading if:
+            //  - the current user is the creator of the lesson, OR
+            //  - there is a professor notification for this lesson assigned to this user (or generic) and not yet handled
+            var hasNotif = await _db.ProfessorNotifications.AnyAsync(n =>
+                n.LessonId == lesson.Id &&
+                (!string.IsNullOrEmpty(n.ProfessorUserId) ? n.ProfessorUserId == userId : true) &&
+                !n.IsHandled);
+
+            if (lesson.CreatedByUserId != userId && !hasNotif)
+            {
+                return Forbid();
+            }
 
             // Preserve previous validated/passed state to compute increments
             var wasPreviouslyPassed = attempt.IsValidated && attempt.Passed == true;

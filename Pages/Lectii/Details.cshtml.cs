@@ -152,7 +152,11 @@ namespace Learn_Earn.Pages.Lectii
 
             await _db.SaveChangesAsync();
 
-            return RedirectToPage(new { id = id });
+            // Prepare a friendly toast message about XP gain
+            TempData["XpToastMessage"] = $"You earned {xpToAward} XP for completing this lesson.";
+            TempData["XpToastKind"] = "lesson";
+
+            return RedirectToPage(new { id });
         }
 
         public class ProfessorValidationInput
